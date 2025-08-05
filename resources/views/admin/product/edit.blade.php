@@ -56,34 +56,34 @@
                         @error('slug') <span class="alert alert-danger text-center">{{$message}}</span>@enderror
                         <div class="gap22 cols">
                             <fieldset class="category">
-                                <div class="body-title mb-10">Category <span class="tf-color-1">*</span>
-                                </div>
+                                <div class="body-title mb-10">Category <span class="tf-color-1">*</span></div>
                                 <div class="select">
-                                    <select class="" name="category_id">
-                                        <option>Choose category</option>
+                                    <select class="" name="category_id" required>
+                                        <option value="" disabled {{ is_null($product->category_id) ? 'selected' : '' }}>Choose category</option>
                                         @foreach($categories as $category)
-                                            <option value="{{$category->id}}" {{$product->category_id == $category->id ? "selected":""}}>{{$category->name}}</option>
-
+                                            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                                                {{ $category->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </fieldset>
-                            @error('category_id') <span class="alert alert-dan.ger text-center">{{$message}}</span>@enderror
+                            @error('category_id') <span class="alert alert-danger text-center">{{ $message }}</span> @enderror
+
                             <fieldset class="brand">
-                                <div class="body-title mb-10">Brand <span class="tf-color-1">*</span>
-                                </div>
+                                <div class="body-title mb-10">Brand <span class="tf-color-1">*</span></div>
                                 <div class="select">
-                                    <select class="" name="brand_id">
-                                        <option>Choose Brand</option>
+                                    <select class="" name="brand_id" required>
+                                        <option value="" disabled {{ is_null($product->brand_id) ? 'selected' : '' }}>Choose Brand</option>
                                         @foreach($brands as $brand)
-                                            <option value="{{$brand->id}}"  {{$product->brand_id == $brand->id ? "selected":""}}>{{$brand->name}}</option>
-
+                                            <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>
+                                                {{ $brand->name }}
+                                            </option>
                                         @endforeach
-
                                     </select>
                                 </div>
                             </fieldset>
-                            @error('brand_id') <span class="alert alert-danger text-center">{{$message}}</span>@enderror
+                            @error('brand_id') <span class="alert alert-danger text-center">{{ $message }}</span> @enderror
                         </div>
 
                         <fieldset class="short_description">

@@ -2,69 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+use App\Http\Requests\OrderRequest;
+use App\Repositories\OrderRepository;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
-    public function index()
+    protected $orderService;
+    protected $orderRepository;
+
+    public function __construct(OrderService $orderService,OrderRepository $orderRepository)
     {
-        $order=Order::all();
-        return view('order.index',compact('order'));
+        $this->orderService = $orderService;
+        $this->orderRepository=$orderRepository;
     }
-    public function create()
+
+    public function orders()
     {
-        return view('order.create');
+        $orders = $this->orderRepository->getAllPaginated();
+        return view('admin.order.orders', compact('orders'));
     }
-    public function store(Request $request)
+
+    public function show($order_id)
     {
-
-//        $request->validate([
-//            'name'=>'required'|'string'|'max:255',
-//            'description'=>'nullable'|'string'|'max:1000',
-//            ]);
-
-        Order::create([
-            'status'=>$request->status,
-            'payment_status'=>$request->payment_status,
-            'total_amount'=>$request->total_amount,
-            'user_id'=>$request->user_id,
-            'updated_at'=>now()
-
+        $details = $this->orderService->getOrderDetails($order_id);
+        return view('admin.order.show', [
+            'order' => $details['order'],
+            'orderItems' => $details['items'],
+            'payment' => $details['payment'],
         ]);
-        return to_route('order.index');
+    }
 
-    }
-    public function show( $id)
+    public function updateStatus(Request $request)
     {
-        $order=Order::findOrFail($id);
-        return view('order.show',compact('order'));
+        $this->orderService->updateOrderStatus($request->order_id, $request->order_status);
+        return back()->with('status', 'Status changed successfully!');
+    }
 
-    }
-    public function edit( $id)
+    public function cancel($id)
     {
-        $order=Order::findOrFail($id);
-        return view('order.show',compact('order'));
+        $this->orderService->updateOrderStatus($id, 'canceled');
+        return back()->with('status', 'Cancel successfully!');
     }
-    public function update(Request $request, $id)
-    {
-// $request->validate([
-//        'name'=>'required'|'string'|'max:255',
-//        'description'=>'nullable'|'string'|'max:1000',
-//    ]);
-        Order::findOrFail($id)->update([
-            'status'=>$request->status,
-            'payment_status'=>$request->payment_status,
-            'total_amount'=>$request->total_amount,
-            'user_id'=>$request->user_id,
-            'updated_at'=>now()
 
-        ]);
-        return to_route('order.index');
-    }
-    public function delete( $id)
+    public function create(OrderRequest $request)
     {
-        Order::destroy($id);
-        return to_route('order.index');
+
+        $this->orderService->createOrderFromCheckout($request);
+        return redirect()->route('order-confirmation');
+    }
+
+    public function confirmation()
+    {
+        if (Session::has('order_id')) {
+            $order = $this->orderService->getOrderDetails(Session::get('order_id'))['order'];
+            $mode = Session::get('mode');
+            return view('order-confirmation', compact('order', 'mode'));
+        } else {
+            return view('cart.index');
+        }
     }
 }

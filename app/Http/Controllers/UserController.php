@@ -2,15 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\User;
+use App\Repositories\OrderRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    protected OrderRepository $orderRepository;
+
+    public function __construct(OrderRepository $orderRepository){
+        $this->orderRepository=$orderRepository;
+
+    }
     public function index()
-    {
-        $users=User::all();
+    {$users=User::all();
         return view('user.index',compact('users'));
+    }
+    public function orders(){
+        $orders=$this->orderRepository->userOrder(10); return view('user.account.orders',compact('orders'));
     }
     public function create()
     {
@@ -64,5 +75,7 @@ class UserController extends Controller
         User::destroy($id);
         return to_route('user.index');
     }
+
+
 
 }

@@ -389,23 +389,23 @@
           }'>
 
                     <div class="swiper-wrapper">
-                        @foreach($rproducts as $rproduct)
+                        @foreach($related_products as $$related_product)
                         <div class="swiper-slide product-card" >
-                            <div class="pc__img-wrapper" {{route('product.details',['slug'=>$rproduct->slug])}}>
-                                <a href="{{route('product.details',['slug'=>$rproduct->slug])}}">
-                                    <img  loading="lazy" src="{{asset('storage/products_image/' . $rproduct->image)}}" width="330" height="400" alt="{{$rproduct->name}}">
-                                    @foreach(explode(',',$rproduct->images) as $img)
-                                        <img loading="lazy" src="{{asset('storage/products_image/gallery/' . $img)}}"  alt="{{$rproduct->name}}" class="pc__img pc__img-second"></a>
+                            <div class="pc__img-wrapper" {{route('product.details',['slug'=>$$related_product->slug])}}>
+                                <a href="{{route('product.details',['slug'=>$$related_product->slug])}}">
+                                    <img  loading="lazy" src="{{asset('storage/products_image/' . $$related_product->image)}}" width="330" height="400" alt="{{$$related_product->name}}">
+                                    @foreach(explode(',',$$related_product->images) as $img)
+                                        <img loading="lazy" src="{{asset('storage/products_image/gallery/' . $img)}}"  alt="{{$$related_product->name}}" class="pc__img pc__img-second"></a>
                                 @endforeach
-                                @if(Cart::instance('cart')->content()->where('id',$rproduct->id)->count()>0)
+                                @if(Cart::instance('cart')->content()->where('id',$$related_product->id)->count()>0)
                                     <a href="{{route('cart.index')}}" class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium btn-warning mb-3">Go To Cart</a>
                                 @else
                                     <form name="addtocart-form" method="post" action="{{route('cart.add')}}">
                                         @csrf
-                                        <input type="hidden" name="id" value='{{$rproduct->id}}' />
+                                        <input type="hidden" name="id" value='{{$$related_product->id}}' />
                                         <input type="hidden" name="quantity" value='1' />
-                                        <input type="hidden" name="name" value='{{$rproduct->name}}' />
-                                        <input type="hidden" name="price" value='{{$rproduct->sale_price == '' ? $rproduct->regular_price : $rproduct->sale_price}}' />
+                                        <input type="hidden" name="name" value='{{$$related_product->name}}' />
+                                        <input type="hidden" name="price" value='{{$$related_product->sale_price == '' ? $$related_product->regular_price : $$related_product->sale_price}}' />
 
                                         <button type="submit" class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium " data-aside="cartDrawer" title="Add To Cart">Add To Cart</button>
                                     </form>
@@ -413,13 +413,13 @@
                             </div>
 
                             <div class="pc__info position-relative">
-                                <p class="pc__category">{{$rproduct->category->name}}</p>
-                                <h6 class="pc__title"><a href="{{route('product.details',['slug'=>$rproduct->slug])}}">{{$rproduct->name}}</a></h6>
+                                <p class="pc__category">{{$$related_product->category->name}}</p>
+                                <h6 class="pc__title"><a href="{{route('product.details',['slug'=>$$related_product->slug])}}">{{$$related_product->name}}</a></h6>
                                 <div class="product-card__price d-flex">
-                                    <span class="money price">  @if($rproduct->sale_price)
-                                            <s>${{$rproduct->regular_price}}</s>${{$rproduct->sale_price}}
+                                    <span class="money price">  @if($$related_product->sale_price)
+                                            <s>${{$$related_product->regular_price}}</s>${{$$related_product->sale_price}}
                                         @else
-                                            ${{$rproduct->regular_price}}
+                                            ${{$$related_product->regular_price}}
 
                                         @endif</span>
                                 </div>
