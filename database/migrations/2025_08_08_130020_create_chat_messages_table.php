@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('slides', function (Blueprint $table) {
+        Schema::create('chat_messages', function (Blueprint $table) {
             $table->id();
-            $table->string('tagline');
-            $table->string('title')->nullable();
-            $table->string('subtitle')->nullable();
-            $table->string('link')->nullable();
-            $table->string('image')->nullable();
-            $table->boolean('status');
+
+            $table->foreignId('conversation_id')->constrained()->onDelete('cascade');
+
+            $table->enum('sender', ['user', 'assistant']);
+
+            $table->text('message');
 
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('slides');
+        Schema::dropIfExists('chat_messages');
     }
 };

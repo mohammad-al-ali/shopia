@@ -27,7 +27,7 @@ class SlideRequest extends FormRequest
             'subtitle'           =>                                                ['required'],
             'link'               =>                                                ['required'],
             'image'              =>     ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            'status'             =>                                                ['required'],
+            'status'             =>                                                ['nullable'],
         ];
     }
 }
