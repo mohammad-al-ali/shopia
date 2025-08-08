@@ -72,10 +72,11 @@
                     <fieldset class="category">
                         <div class="body-title">Select category icon</div>
                         <div class="select flex-grow">
-                            <select class="" name="status">
-                                <option>Select</option>
-                                <option value="1" @if(old('status')=='1') selected @endif>Active</option>
-                                <option value="0" @if(old('status')=='0') selected @endif>Inactive</option>Zza
+                            <select class="" name="status" required>
+                                <option value="">Select</option>
+                                <option value=1 @if(old('status')=='1') selected @endif>Active</option>
+                                <option value=0 @if(old('status')=='0') selected @endif>Inactive</option>
+
                             </select>
                         </div>
                     </fieldset>

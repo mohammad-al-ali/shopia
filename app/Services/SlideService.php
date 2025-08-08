@@ -22,21 +22,25 @@ class SlideService{
            'title',
            'subtitle',
            'link',
-           'status',
        ]);
     }
 
     public function handelSlideStore($request): void
     {
        $data=$this->prepareSlideData($request);
-       $data['image']=$this->processImage($request->file('image'),400,690,'slides_image',$this->folderSlideName);
+        $data['status'] = $request->has('status') ? $request->status : 0;
+        if ($request->file('image')){
+            $data['image']=$this->processImage($request->file('image'),400,690,'slides_image',$this->folderSlideName);
+        }
         $this->slideRepository->create($data);
     }
 
     public function handleSlideUpdate($request){
         $slide=$this->slideRepository->find($request->id);
         $data=$this->prepareSlideData($request);
-        $data['image']=$this->replaceImage($slide->image,$request->file('image'),540,689,$this->folderSlideName);
+        if ($request->file('image')){
+            $data['image']=$this->replaceImage($slide->image,$request->file('image'),540,689,$this->folderSlideName);
+        }
         $this->slideRepository->update($slide,$data);
     }
 

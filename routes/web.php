@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AI\CustomerChatController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/shop/{slug}', [ProductController::class, 'show'])->name('product.details');
@@ -98,3 +101,7 @@ Route::middleware(['auth',AuthAdmin::class])->group(function (){
                                     Route::delete('/admin/slide/delete/{id}', 'delete')->name('admin.slide.delete');
     });
 });
+Route::view('/chat', 'chat'); // واجهة المحادثة
+
+Route::post('/chat', [CustomerChatController::class, 'chat'])
+    ->name('chat.handle');
