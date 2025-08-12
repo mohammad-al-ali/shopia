@@ -15,8 +15,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request;
 Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/shop/{slug}', [ProductController::class, 'show'])->name('product.details');
@@ -101,7 +99,6 @@ Route::middleware(['auth',AuthAdmin::class])->group(function (){
                                     Route::delete('/admin/slide/delete/{id}', 'delete')->name('admin.slide.delete');
     });
 });
-Route::view('/chat', 'chat'); // واجهة المحادثة
-
-Route::post('/chat', [CustomerChatController::class, 'chat'])
-    ->name('chat.handle');
+Route::view('/chat', 'chat')->middleware('auth');
+Route::get('/chat/history', [CustomerChatController::class, 'getConversationHistory'])->middleware('auth')->name('get.conversation');
+Route::post('/chat', [CustomerChatController::class, 'chat'])->name('ai.assistant')->middleware('auth');
