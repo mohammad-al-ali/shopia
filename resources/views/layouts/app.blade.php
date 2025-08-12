@@ -667,6 +667,78 @@
 <script src="{{asset('assets/js/plugins/countdown.js')}}"></script>
 <script src="{{asset('assets/js/theme.js')}}"></script>
 @stack("scripts")
+<style>
+    #ai-assistant-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 26px;
+        cursor: pointer;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: popIn 0.6s ease-out;
+        z-index: 9999;
+    }
+
+    #ai-assistant-btn:hover {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    @keyframes popIn {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+        80% {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /* Optional pulse animation */
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+        }
+    }
+
+    #ai-assistant-btn::after {
+        content: "";
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+</style>
+
+<div id="ai-assistant-btn" title=" AI ASSISTANT">
+    💬
+</div>
+
+<script>
+    document.getElementById('ai-assistant-btn').addEventListener('click', function () {
+        window.location.href = "{{route('ai.assistant')}}";
+    });
+</script>
 </body>
 
 </html>

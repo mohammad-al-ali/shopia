@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique(); // إضافة معرف فريد
             $table->decimal('regular_price', 8, 2); // إضافة السعر العادي
             $table->decimal('sale_price', 8, 2)->nullable(); // السعر المخفض
-            $table->decimal('warehouse_price ',8,2);
+            $table->decimal('warehouse_price',8,2);
             $table->boolean('featured')->default(false); // تحديد المنتج كمميز
             $table->integer('quantity');
             $table->boolean('is_active')->default(true);
