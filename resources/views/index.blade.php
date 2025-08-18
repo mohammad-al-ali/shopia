@@ -1,121 +1,74 @@
 @extends('layouts.app')
 @section('content')
+<style>
+.image-slider {
+  width: 100%;
+  border:200px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #f2f2f2;
+  border-radius: 8px;
+
+}
+.image-slider img {
+  width: 100%;
+  height: 900px;
+  object-fit: cover;
+   margin-top:170px;
+  display: none;
+  top: 0;
+  left: 0;
+  z-index: auto;
+}
+.image-slider img.active {
+  display: block;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .image-slider img {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+  }
+  .image-slider img.active {
+    opacity: 1;
+  }
+}
+</style>
+<section class="image-slider" id="my-slider">
+  <img loading="lazy" src="{{asset('assets/images/home/demo3/category_1.png')}}" class="active" />
+  <img  loading="lazy" src="{{asset('assets/images/home/demo3/category_2.png')}}" />
+</section>
+<script>
+(function () {
+  const slider = document.getElementById('my-slider');
+  const slides = Array.from(slider.querySelectorAll('img'));
+  let index = 0;
+
+  if (slides.length < 2) return;
+
+  setInterval(() => {
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+  }, 4200);
+})();
+</script>
     <main>
 
-        <section class="swiper-container js-swiper-slider swiper-number-pagination slideshow" data-settings='{
-        "autoplay": {
-          "delay": 5000
-        },
-        "slidesPerView": 1,
-        "effect": "fade",
-      }'>
-            <div class="swiper-wrapper">
-                @foreach($slides as $slide)
-                <div class="swiper-slide">
-                    <div class="overflow-hidden position-relative h-100">
-                        <div class="slideshow-character position-absolute bottom-0 pos_right-center">
-                            <img loading="lazy" src="{{asset('Storage/slides/'.$slide->image)}}" width="542" height="733"
-                                 alt="Woman Fashion 1"
-                                 class="slideshow-character__img animate animate_fade animate_btt animate_delay-9 w-auto h-auto" />
-                            <div class="character_markup type2">
-                                <p
-                                    class="text-uppercase font-sofia mark-grey-color animate animate_fade animate_btt animate_delay-10 mb-0">
-                                   {{$slide->tageline}}</p>
-                            </div>
-                        </div>
-                        <div class="slideshow-text container position-absolute start-50 top-50 translate-middle">
-                            <h6 class="text_dash text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3">
-                                New Arrivals</h6>
-                            <h2 class="h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5">{{$slide->title}}</h2>
-                            <h2 class="h1 fw-bold animate animate_fade animate_btt animate_delay-5">{{$slide->subtitle}}</h2>
-                            <a href="{{$slide->link}}"
-                               class="btn-link btn-link_lg default-underline fw-medium animate animate_fade animate_btt animate_delay-7">Shop
-                                Now</a>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            <div class="container">
-                <div
-                    class="slideshow-pagination slideshow-number-pagination d-flex align-items-center position-absolute bottom-0 mb-5">
-                </div>
-            </div>
-        </section>
-        <div class="container mw-1620 bg-white border-radius-10">
-            <div class="mb-3 mb-xl-5 pt-1 pb-4"></div>
-            <section class="category-carousel container">
-                <h2 class="section-title text-center mb-3 pb-xl-2 mb-xl-4">You Might Like</h2>
+        <style>
+            .hero-swiper { height: auto; }
+            .hero-slide-img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1920 / 1200;
+                object-fit: cover;
+                display: block;
+            }
+            @media (min-width: 1200px) {
+                .hero-swiper { max-height: 1200px; }
+            }
+        </style>
 
-                <div class="position-relative">
-                    <div class="swiper-container js-swiper-slider" data-settings='{
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": 8,
-              "slidesPerGroup": 1,
-              "effect": "none",
-              "loop": true,
-              "navigation": {
-                "nextEl": ".products-carousel__next-1",
-                "prevEl": ".products-carousel__prev-1"
-              },
-              "breakpoints": {
-                "320": {
-                  "slidesPerView": 2,
-                  "slidesPerGroup": 2,
-                  "spaceBetween": 15
-                },
-                "768": {
-                  "slidesPerView": 4,
-                  "slidesPerGroup": 4,
-                  "spaceBetween": 30
-                },
-                "992": {
-                  "slidesPerView": 6,
-                  "slidesPerGroup": 1,
-                  "spaceBetween": 45,
-                  "pagination": false
-                },
-                "1200": {
-                  "slidesPerView": 8,
-                  "slidesPerGroup": 1,
-                  "spaceBetween": 60,
-                  "pagination": false
-                }
-              }
-            }'>
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img loading="lazy" class="w-100 h-auto mb-3" src="{{asset('assets/images/home/demo3/category_1.png')}}" width="124"
-                                     height="124" alt="" />
-                                <div class="text-center">
-                                    <a href="#" class="menu-link fw-medium">Women<br />Tops</a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <img loading="lazy" class="w-100 h-auto mb-3" src="{{asset('assets/images/home/demo3/category_2.png')}}" width="124"
-                                     height="124" alt="" />
-                                <div class="text-center">
-                                    <a href="#" class="menu-link fw-medium">Women<br />Pants</a>
-                                </div>
-                            </div>
-                        </div><!-- /.swiper-wrapper -->
-                    </div><!-- /.swiper-container js-swiper-slider -->
 
-                    <div
-                        class="products-carousel__prev products-carousel__prev-1 position-absolute top-50 d-flex align-items-center justify-content-center">
-                        <svg width="25" height="25" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
-                            <use href="#icon_prev_md" />
-                        </svg>
-                    </div><!-- /.products-carousel__prev -->
-                    <div
-                        class="products-carousel__next products-carousel__next-1 position-absolute top-50 d-flex align-items-center justify-content-center">
-                        <svg width="25" height="25" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
-                            <use href="#icon_next_md" />
-                        </svg>
-                    </div><!-- /.products-carousel__next -->
-                </div><!-- /.position-relative -->
-            </section>
 
             <div class="mb-3 mb-xl-5 pt-1 pb-4"></div>
 
@@ -125,7 +78,7 @@
                     <div
                         class="col-md-6 col-lg-4 col-xl-20per d-flex align-items-center flex-column justify-content-center py-4 align-items-md-start">
                         <h2>Summer Sale</h2>
-                        <h2 class="fw-bold">Up to 60% Off</h2>
+                        <h2 class="fw-bold">Up to 7% Off</h2>
 
                         <div class="position-relative d-flex align-items-center text-center pt-xxl-4 js-countdown mb-3"
                              data-date="18-3-2024" data-time="06:50">
@@ -199,9 +152,9 @@
                                         </div>
 
                                         <div class="pc__info position-relative">
-                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">Cropped Faux Leather Jacket</a></h6>
+                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">ASUS ROG STRIX GF850HLXX10 VR2 Gaming</a></h6>
                                             <div class="product-card__price d-flex">
-                                                <span class="money price text-secondary">$29</span>
+                                                <span class="money price text-secondary">4400$</span>
                                             </div>
 
                                             <div
@@ -236,9 +189,9 @@
                                         </div>
 
                                         <div class="pc__info position-relative">
-                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">Calvin Shorts</a></h6>
+                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">ASUS ROG STRIX G18</a></h6>
                                             <div class="product-card__price d-flex">
-                                                <span class="money price text-secondary">$62</span>
+                                                <span class="money price text-secondary">3850$</span>
                                             </div>
 
                                             <div
@@ -273,9 +226,9 @@
                                         </div>
 
                                         <div class="pc__info position-relative">
-                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">Kirby T-Shirt</a></h6>
+                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">LENOVO LEGION i5irix</a></h6>
                                             <div class="product-card__price d-flex">
-                                                <span class="money price text-secondary">$62</span>
+                                                <span class="money price text-secondary">2125$</span>
                                             </div>
 
                                             <div
@@ -310,10 +263,10 @@
                                         </div>
 
                                         <div class="pc__info position-relative">
-                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">Cableknit Shawl</a></h6>
+                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">DELL GAMING G16</a></h6>
                                             <div class="product-card__price d-flex align-items-center">
-                                                <span class="money price-old">$129</span>
-                                                <span class="money price text-secondary">$99</span>
+                                                <span class="money price-old">1840$</span>
+                                                <span class="money price text-secondary">1720$</span>
                                             </div>
 
                                             <div
@@ -348,9 +301,9 @@
                                         </div>
 
                                         <div class="pc__info position-relative">
-                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">Cropped Faux Leather Jacket</a></h6>
+                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">ASUS ROG STRIX GF850HLXX10 VR2 Gaming</a></h6>
                                             <div class="product-card__price d-flex">
-                                                <span class="money price text-secondary">$29</span>
+                                                <span class="money price text-secondary">4400$</span>
                                             </div>
 
                                             <div
@@ -385,9 +338,9 @@
                                         </div>
 
                                         <div class="pc__info position-relative">
-                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">Calvin Shorts</a></h6>
+                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">ASUS ROG STRIX G18</a></h6>
                                             <div class="product-card__price d-flex">
-                                                <span class="money price text-secondary">$62</span>
+                                                <span class="money price text-secondary">3850$</span>
                                             </div>
 
                                             <div
@@ -422,9 +375,9 @@
                                         </div>
 
                                         <div class="pc__info position-relative">
-                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">Kirby T-Shirt</a></h6>
+                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">LENOVO LEGION i5irix</a></h6>
                                             <div class="product-card__price d-flex">
-                                                <span class="money price text-secondary">$62</span>
+                                                <span class="money price text-secondary">2125$</span>
                                             </div>
 
                                             <div
@@ -459,10 +412,10 @@
                                         </div>
 
                                         <div class="pc__info position-relative">
-                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">Cableknit Shawl</a></h6>
+                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">DELL GAMING G16</a></h6>
                                             <div class="product-card__price d-flex align-items-center">
-                                                <span class="money price-old">$129</span>
-                                                <span class="money price text-secondary">$99</span>
+                                                <span class="money price-old">1840$</span>
+                                                <span class="money price text-secondary">1720$</span>
                                             </div>
 
                                             <div
@@ -502,10 +455,10 @@
                             <img loading="lazy" class="h-auto" src="{{asset('assets/images/home/demo3/category_9.jpg')}}" width="690" height="665"
                                  alt="" />
                             <div class="category-banner__item-mark">
-                                Starting at $19
+                                Starting at $500
                             </div>
                             <div class="category-banner__item-content">
-                                <h3 class="mb-0">Blazers</h3>
+                                <h3 class="mb-0">PS5 SLIM</h3>
                                 <a href="#" class="btn-link default-underline text-uppercase fw-medium">Shop Now</a>
                             </div>
                         </div>
@@ -515,10 +468,10 @@
                             <img loading="lazy" class="h-auto" src="{{asset('assets/images/home/demo3/category_10.jpg')}}" width="690" height="665"
                                  alt="" />
                             <div class="category-banner__item-mark">
-                                Starting at $19
+                                Starting at $340
                             </div>
                             <div class="category-banner__item-content">
-                                <h3 class="mb-0">Sportswear</h3>
+                                <h3 class="mb-0">PS4 NEW 1000GB</h3>
                                 <a href="#" class="btn-link default-underline text-uppercase fw-medium">Shop Now</a>
                             </div>
                         </div>
@@ -542,9 +495,9 @@
                             </div>
 
                             <div class="pc__info position-relative">
-                                <h6 class="pc__title"><a href="{{asset('details.html')}}">Cropped Faux Leather Jacket</a></h6>
+                                <h6 class="pc__title"><a href="{{asset('details.html')}}">Roku Smart TV 2025 – 32-Inch Select Series, 1080p Full HD TV </a></h6>
                                 <div class="product-card__price d-flex align-items-center">
-                                    <span class="money price text-secondary">$29</span>
+                                    <span class="money price text-secondary">116$</span>
                                 </div>
 
                                 <div
@@ -578,9 +531,10 @@
                             </div>
 
                             <div class="pc__info position-relative">
-                                <h6 class="pc__title"><a href="details.html">Calvin Shorts</a></h6>
+                                <h6 class="pc__title"><a href="details.html">
+Xiaomi 108 cm (43 inch) FX Pro QLED Ultra HD</a></h6>
                                 <div class="product-card__price d-flex align-items-center">
-                                    <span class="money price text-secondary">$62</span>
+                                    <span class="money price text-secondary">500$</span>
                                 </div>
 
                                 <div
@@ -611,13 +565,14 @@
                                     <img loading="lazy" src="assets/images/home/demo3/product-6.jpg" width="330" height="400"
                                          alt="Cropped Faux leather Jacket" class="pc__img">
                                 </a>
-                                <div class="product-label text-uppercase bg-white top-0 left-0 mt-2 mx-2">New</div>
+
                             </div>
 
                             <div class="pc__info position-relative">
-                                <h6 class="pc__title"><a href="details.html">Kirby T-Shirt</a></h6>
+                                <h6 class="pc__title"><a href="details.html">
+Xiaomi 138 cm (55 inch) FX Ultra HD 4K</a></h6>
                                 <div class="product-card__price d-flex align-items-center">
-                                    <span class="money price text-secondary">$17</span>
+                                    <span class="money price text-secondary">400$</span>
                                 </div>
 
                                 <div
@@ -648,14 +603,14 @@
                                     <img loading="lazy" src="assets/images/home/demo3/product-7.jpg" width="330" height="400"
                                          alt="Cropped Faux leather Jacket" class="pc__img">
                                 </a>
-                                <div class="product-label bg-red text-white right-0 top-0 left-auto mt-2 mx-2">-67%</div>
+
                             </div>
 
                             <div class="pc__info position-relative">
-                                <h6 class="pc__title">Cableknit Shawl</h6>
+                                <h6 class="pc__title">Panasonic 80 cm (32 inches) HD Ready Smart LED</h6>
                                 <div class="product-card__price d-flex align-items-center">
                                     <span class="money price-old">$129</span>
-                                    <span class="money price text-secondary">$99</span>
+                                    <span class="money price text-secondary">250$</span>
                                 </div>
 
                                 <div
@@ -689,9 +644,9 @@
                             </div>
 
                             <div class="pc__info position-relative">
-                                <h6 class="pc__title"><a href="details.html">Cropped Faux Leather Jacket</a></h6>
+                                <h6 class="pc__title"><a href="details.html">JBL Tune 770NC - Adaptive Noise Cancelling</a></h6>
                                 <div class="product-card__price d-flex align-items-center">
-                                    <span class="money price text-secondary">$29</span>
+                                    <span class="money price text-secondary">100$</span>
                                 </div>
 
                                 <div
@@ -725,9 +680,9 @@
                             </div>
 
                             <div class="pc__info position-relative">
-                                <h6 class="pc__title"><a href="details.html">Calvin Shorts</a></h6>
+                                <h6 class="pc__title"><a href="details.html">HLDIRECT 47 Inch Gaming Desk with LED Lights, Large RGB Computer</a></h6>
                                 <div class="product-card__price d-flex align-items-center">
-                                    <span class="money price text-secondary">$62</span>
+                                    <span class="money price text-secondary">179$</span>
                                 </div>
 
                                 <div
@@ -761,9 +716,9 @@
                             </div>
 
                             <div class="pc__info position-relative">
-                                <h6 class="pc__title"><a href="details.html">Kirby T-Shirt</a></h6>
+                                <h6 class="pc__title"><a href="details.html">Lufeiya L Shaped Computer Desk with Power Outlet Shelves, 47 Inch Corner Desk</a></h6>
                                 <div class="product-card__price d-flex align-items-center">
-                                    <span class="money price text-secondary">$17</span>
+                                    <span class="money price text-secondary">65$</span>
                                 </div>
 
                                 <div
@@ -797,10 +752,10 @@
                             </div>
 
                             <div class="pc__info position-relative">
-                                <h6 class="pc__title">Cableknit Shawl</h6>
+                                <h6 class="pc__title">Laptop Stand for Desk, Adjustable Laptop Riser ABS+Silicone</h6>
                                 <div class="product-card__price d-flex align-items-center">
-                                    <span class="money price-old">$129</span>
-                                    <span class="money price text-secondary">$99</span>
+
+                                    <span class="money price text-secondary">9$</span>
                                 </div>
 
                                 <div

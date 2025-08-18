@@ -252,6 +252,7 @@
     #header {
         padding-top: 8px;
         padding-bottom: 8px;
+
     }
 
     .logo__image {
@@ -266,12 +267,21 @@
             </svg>
             <button class="btn-close-lg position-absolute top-0 start-0 w-100"></button>
         </a>
-
         <div class="logo">
             <a href="{{route('home.index')}}">
                 <img src="{{asset('assets/images/logo.png')}}" alt="Uomo" class="logo__image d-block" />
             </a>
         </div>
+        <style>
+          .logo{
+            width:100%;
+            top:0;
+            z-index:1000;
+            padding-right:80px;
+           }
+          }
+
+        </style>
 
         <a href="#" class="header-tools__item header-tools__cart js-open-aside" data-aside="cartDrawer">
             <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -280,6 +290,15 @@
             <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
         </a>
     </div>
+    <style>
+        .header-tools{
+            top:0;
+            z-index:1000;
+            margin-right:50px;
+          }
+
+        }
+    </style>
 
     <nav
         class="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
@@ -293,6 +312,14 @@
                              xmlns="http://www.w3.org/2000/svg">
                             <use href="#icon_search" />
                         </svg>
+                        <style>
+                          nav{
+
+                          top:0;
+                          z-index:1000;
+                          margin-right:200px;
+                          }
+                        </style>
                     </button>
                     <button class="btn-icon btn-close-lg search-popup__reset pb-0 me-2" type="reset"></button>
                 </div>
@@ -304,6 +331,7 @@
         </div>
 
         <div class="container">
+            </style>
             <div class="overflow-hidden">
                 <ul class="navigation__list list-unstyled position-relative">
                     <li class="navigation__item">
@@ -393,7 +421,7 @@
                 </a>
             </div>
 
-            <nav class="navigation">
+            <navv class="navigation">
                 <ul class="navigation__list list-unstyled d-flex">
                     <li class="navigation__item">
                         <a href="{{route('home.index')}}" class="navigation__link">Home</a>
@@ -411,7 +439,10 @@
                         <a href="contact.html" class="navigation__link">Contact</a>
                     </li>
                 </ul>
-            </nav>
+            </navv>
+            <style>
+                grid-column: 2; justify-self: center; text-align: center;
+            </style>
 
             <div class="header-tools d-flex align-items-center">
                 <div class="header-tools__item hover-container">
@@ -494,9 +525,12 @@
                         <span class="cart-amount d-block position-absolute js-cart-items-count">{{ cart::instance('cart')->content()->count() }}</span>
                     @endif
                 </a>
+
             </div>
         </div>
     </div>
+    <div class="titlee" >
+
 </header>
 @yield('content')
 
@@ -669,4 +703,6 @@
 @stack("scripts")
 </body>
 
+
+</style>
 </html>

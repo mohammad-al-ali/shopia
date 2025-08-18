@@ -59,7 +59,15 @@ class OrderService
             ]);
         }
         else
-            $address=Address::create([$request]);
+            $address=Address::create([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'city' => $request->city,
+                'address' => $request->address,
+                'locality' => $request->locality,
+                'landmark' => $request->landmark,
+                'user_id' => $user_id,
+            ]);
         $this->setCheckoutSession();
 
         $order = $this->orderRepository->createOrder([

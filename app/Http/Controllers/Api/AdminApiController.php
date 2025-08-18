@@ -36,15 +36,15 @@ class AdminApiController extends Controller
 
         // إحصائيات شهرية
         $monthlyData = Order::selectRaw("
-                MONTH(created_at) AS monthNo,
-                DATE_FORMAT(created_at, '%b') AS monthName,
+                strftime('%m', created_at) AS monthNo,
+                strftime('%m', created_at) AS monthName,
                 SUM(total_amount) AS totalAmount,
                 SUM(CASE WHEN status = 'processing' THEN total_amount ELSE 0 END) AS totalProcessingAmount,
                 SUM(CASE WHEN status = 'delivered' THEN total_amount ELSE 0 END) AS totalDeliveredAmount,
                 SUM(CASE WHEN status = 'canceled' THEN total_amount ELSE 0 END) AS totalCanceledAmount
             ")
             ->whereYear('created_at', now()->year)
-            ->groupByRaw("YEAR(created_at), MONTH(created_at), DATE_FORMAT(created_at, '%b')")
+            ->groupByRaw("strftime('%Y', created_at), strftime('%m', created_at)")
             ->get();
 
         // ترتيب النتيجة بصيغة API موحدة

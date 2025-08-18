@@ -30,15 +30,15 @@ class AdminController extends Controller
         SUM(CASE WHEN status='canceled' THEN 1 ELSE 0 END) AS TotalCanceled
     ")->first();
         $monthlyData =Order::selectRaw("
-    MONTH(created_at) AS MonthNo,
-    DATE_FORMAT(created_at, '%b') AS MonthName,
+    strftime('%m', created_at) AS MonthNo,
+    strftime('%m', created_at) AS MonthName,
     SUM(	total_amount) AS TotalAmount,
     SUM(CASE WHEN status = 'processing' THEN 	total_amount ELSE 0 END) AS TotalProcessingAmount,
     SUM(CASE WHEN status = 'delivered' THEN 	total_amount ELSE 0 END) AS TotalDeliveredAmount,
     SUM(CASE WHEN status = 'canceled' THEN 	total_amount ELSE 0 END) AS TotalCanceledAmount
 ")
             ->whereYear('created_at', now()->year)
-            ->groupByRaw("YEAR(created_at), MONTH(created_at), DATE_FORMAT(created_at, '%b')")
+            ->groupByRaw("strftime('%Y', created_at), strftime('%m', created_at)")
             ->get();
         $AmountM = $monthlyData->pluck('TotalAmount')->implode(',');
         $ProcessingAmountM = $monthlyData->pluck('TotalProcessingAmount')->implode(',');

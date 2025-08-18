@@ -940,14 +940,21 @@ function pureFadeOut(e) {
             settings = Object.assign(settings, JSON.parse($sliderContainer.dataset.settings));
           }
 
-          if ($sliderContainer.querySelectorAll('.swiper-slide').length > 1) {
-            // eslint-disable-next-line no-undef
-            new Swiper($sliderContainer, settings);
-          } else {
-            $sliderContainer.classList.add('swiper-container-initialized');
-            const $active_slide = $sliderContainer.querySelector('.swiper-slide');
-            $active_slide && $active_slide.classList.add('swiper-slide-active');
+          let slideCount = $sliderContainer.querySelectorAll('.swiper-slide').length;
+          if (slideCount < 2) {
+            const wrapper = $sliderContainer.querySelector('.swiper-wrapper');
+            const first = wrapper && wrapper.firstElementChild;
+            if (first) {
+              wrapper.appendChild(first.cloneNode(true));
+              slideCount = 2;
+            } else {
+              settings.loop = false;
+              if (settings.autoplay) { settings.autoplay = false; }
+            }
           }
+          settings.speed = settings.speed || 800;
+          // eslint-disable-next-line no-undef
+          new Swiper($sliderContainer, settings);
         });
       }
     });
