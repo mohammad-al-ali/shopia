@@ -36,7 +36,6 @@ return $this->belongsTo(Brand::class);
         'category_id',
         'featured',
         'images',
-       'price',
     ];
     public function setNameAttribute($value){
         $this->attributes['name']=$value;

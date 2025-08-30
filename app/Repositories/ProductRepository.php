@@ -3,6 +3,7 @@ namespace App\Repositories;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductRepository
 {
@@ -46,72 +47,105 @@ class ProductRepository
         return Brand::select('id','name')->orderBy('name')->get();
     }
 
-    public function delete(Product $product): ?bool
+    public function delete(Product $product)
     {
         return $product->delete();
 
 }
 
+
+// Inside your EloquentProductRepository class
+
+    /**
+     * Searches for products based on a flexible set of filters.
+     * This improved version enhances performance, price logic, and search relevance.
+     *
+     * @param array $filters An associative array of filters.
+     * @return Collection
+     */
     public function searchByFilters(array $filters)
     {
         $query = Product::query();
 
-        // 🔍 الفئة (Category)
+        // 🔍 Category Filter
+        // Note: Assuming your database collation is case-insensitive (e.g., utf8mb4_unicode_ci)
+        // which is a best practice and avoids performance issues with LOWER().
         if (!empty($filters['category'])) {
-            $category = strtolower($filters['category']);
+            $category = $filters['category'];
             $query->whereHas('category', function ($q) use ($category) {
-                $q->whereRaw('LOWER(name) LIKE ?', ["%{$category}%"]);
+                $q->where('name', 'LIKE', "%{$category}%");
             });
         }
 
-        // 💰 السعر (نراعي كل من regular_price و sale_price)
+        // 💰 Price Filter (Improved Logic)
+        // This logic now correctly checks the effective price (sale_price if available, otherwise regular_price).
         if (!empty($filters['min_price'])) {
-            $query->where(function ($q) use ($filters) {
-                $q->where('regular_price', '>=', $filters['min_price'])
-                    ->orWhere('sale_price', '>=', $filters['min_price']);
+            $minPrice = $filters['min_price'];
+            $query->where(function ($q) use ($minPrice) {
+                // The product is valid if:
+                // 1. It has a sale_price which is >= minPrice
+                // OR
+                // 2. It has NO sale_price AND its regular_price is >= minPrice
+                $q->where('sale_price', '>=', $minPrice)
+                    ->orWhere(function ($subQ) use ($minPrice) {
+                        $subQ->whereNull('sale_price')
+                            ->where('regular_price', '>=', $minPrice);
+                    });
             });
         }
 
         if (!empty($filters['max_price'])) {
-            $query->where(function ($q) use ($filters) {
-                $q->where('regular_price', '<=', $filters['max_price'])
-                    ->orWhere('sale_price', '<=', $filters['max_price']);
+            $maxPrice = $filters['max_price'];
+            $query->where(function ($q) use ($maxPrice) {
+                // The product is valid if:
+                // 1. It has a sale_price which is <= maxPrice
+                // OR
+                // 2. It has NO sale_price AND its regular_price is <= maxPrice
+                $q->where('sale_price', '<=', $maxPrice)
+                    ->orWhere(function ($subQ) use ($maxPrice) {
+                        $subQ->whereNull('sale_price')
+                            ->where('regular_price', '<=', $maxPrice);
+                    });
             });
         }
 
-        // 🔑 الكلمات المفتاحية (name + description + short_description)
-        if (!empty($filters['keywords']) && is_array($filters['keywords'])) {
-            foreach ($filters['keywords'] as $keyword) {
-                $keyword = strtolower($keyword);
-                $query->where(function ($q) use ($keyword) {
-                    $q->whereRaw('LOWER(name) LIKE ?', ["%{$keyword}%"])
-                        ->orWhereRaw('LOWER(description) LIKE ?', ["%{$keyword}%"])
-                        ->orWhereRaw('LOWER(short_description) LIKE ?', ["%{$keyword}%"]);
-                });
-            }
+        // 🔑 Keywords & ⚙️ Technical Specs (Combined & Improved Logic)
+        // We combine keywords and specs into a single search pool.
+        // This now performs an OR search, which is more user-friendly.
+        $searchTerms = array_merge(
+            isset($filters['keywords']) ? $filters['keywords'] : [],
+            isset($filters['technical_specs']) ? array_values($filters['technical_specs']) : []
+        );
+
+        if (!empty($searchTerms)) {
+            $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    if (!empty($term)) {
+                        // This creates a chain of "OR WHERE name LIKE ... OR WHERE description LIKE ..."
+                        // for all search terms, finding products that match ANY of them.
+                        $q->orWhere('name', 'LIKE', "%{$term}%")
+                            ->orWhere('description', 'LIKE', "%{$term}%")
+                            ->orWhere('short_description', 'LIKE', "%{$term}%");
+                    }
+                }
+            });
         }
 
-        // ⚙️ المواصفات التقنية (نفترض أنها موجودة في الوصف أو الوصف المختصر)
-        if (!empty($filters['technical_specs']) && is_array($filters['technical_specs'])) {
-            foreach ($filters['technical_specs'] as $key => $value) {
-                $value = strtolower($value);
-                $query->where(function ($q) use ($value) {
-                    $q->whereRaw('LOWER(description) LIKE ?', ["%{$value}%"])
-                        ->orWhereRaw('LOWER(short_description) LIKE ?', ["%{$value}%"]);
-                });
-            }
-        }
-
-        // 🧪 النتيجة النهائية (عرض الحقول الأساسية فقط)
-        return $query->take(5)->get([
+        // 🧪 Final Result (Selecting essential fields)
+        return $query->select([
             'id',
             'name',
+            'slug',
             'regular_price',
             'sale_price',
+            'quantity', // It's useful to get quantity for availability status
             'short_description',
-            'image'
-        ]);
+        ])
+            ->take(5)
+            ->get();
     }
+
+
 
 
 
