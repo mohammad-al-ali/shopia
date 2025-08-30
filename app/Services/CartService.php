@@ -29,10 +29,10 @@ class CartService
     /**
      * Add a product to the cart.
      *
-     * @param array $data
+     * @param $data
      * @return void
      */
-    public function addToCart(array $data): void
+    public function addToCart($data): void
     {
         Cart::instance('cart')->add(
             $data['id'],
