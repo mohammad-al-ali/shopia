@@ -9,16 +9,38 @@ use Carbon\Carbon;
 use App\Models\Address;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
 
+/**
+ * Class OrderService
+ *
+ * Handles all operations related to order, including creation from checkout,
+ * updating order status, retrieving order details, and managing checkout session data.
+ */
 class OrderService
 {
+    /**
+     * Order repository instance.
+     *
+     * @var OrderRepository
+     */
     protected OrderRepository $orderRepository;
 
+    /**
+     * OrderService constructor.
+     *
+     * @param OrderRepository $orderRepository
+     */
     public function __construct(OrderRepository $orderRepository)
     {
         $this->orderRepository = $orderRepository;
     }
 
-    public function getOrderDetails($order_id)
+    /**
+     * Retrieve detailed information about an order, including items and payment.
+     *
+     * @param int $order_id
+     * @return array
+     */
+    public function getOrderDetails(int $order_id): array
     {
         return [
             'order' => $this->orderRepository->find($order_id),
@@ -27,7 +49,14 @@ class OrderService
         ];
     }
 
-    public function updateOrderStatus($order_id, $status)
+    /**
+     * Update the status of an order and adjust payment or delivery dates accordingly.
+     *
+     * @param int $order_id
+     * @param string $status
+     * @return void
+     */
+    public function updateOrderStatus(int $order_id, string $status): void
     {
         $order = $this->orderRepository->find($order_id);
 
@@ -43,23 +72,29 @@ class OrderService
         $this->orderRepository->save($order);
     }
 
-    public function createOrderFromCheckout($request)
+    /**
+     * Create a new order from checkout data, including address, items, and payment.
+     *
+     * @param mixed $request
+     * @return \App\Models\Order
+     */
+    public function createOrderFromCheckout(mixed $request)
     {
         $user_id = Auth::id();
         $address = Address::where('user_id', $user_id)->first();
-        if ($address){
+
+        if ($address) {
             $address->update([
-                'name'=>$request->name,
-                'phone'=>$request->phone,
-                'city'=>$request->city,
-                'address'=>$request->address,
-                'locality'=>$request->locality,
-                'landmark'=>$request->landmark,
-                'updated_at'=>now(),
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'city' => $request->city,
+                'address' => $request->address,
+                'locality' => $request->locality,
+                'landmark' => $request->landmark,
+                'updated_at' => now(),
             ]);
-        }
-        else
-            $address=Address::create([
+        } else {
+            $address = Address::create([
                 'name' => $request->name,
                 'phone' => $request->phone,
                 'city' => $request->city,
@@ -68,6 +103,8 @@ class OrderService
                 'landmark' => $request->landmark,
                 'user_id' => $user_id,
             ]);
+        }
+
         $this->setCheckoutSession();
 
         $order = $this->orderRepository->createOrder([
@@ -109,7 +146,12 @@ class OrderService
         return $order;
     }
 
-    public function setCheckoutSession()
+    /**
+     * Set or update the checkout session data based on cart contents and discounts.
+     *
+     * @return void
+     */
+    public function setCheckoutSession(): void
     {
         if (Cart::instance('cart')->content()->count() > 0) {
             if (Session::has('coupon')) {

@@ -37,6 +37,11 @@ Route::middleware(['auth'])->group(function (){
                                 Route::get('/checkout', [CheckoutController::class,'show'])->name('cart.checkout');
                                 Route::post('/cart/apply/coupon', [CouponController::class,'apply'])->name('cart.apply.coupon');
                                 Route::delete('/cart/remove/coupon', [CouponController::class,'remove'])->name('cart.remove.coupon');
+
+                                Route::controller(CustomerChatController::class)->group(function (){
+                                    Route::get('/chat/history', 'getConversationHistory')->name('get.conversation');
+                                    Route::post('/chat', 'chat')->name('ai.assistant');
+    });
 });
 Route::middleware(['auth',AuthAdmin::class])->group(function (){
     Route::controller(AdminController::class)->group(function(){
@@ -85,7 +90,7 @@ Route::middleware(['auth',AuthAdmin::class])->group(function (){
 
     //ORDER ROUTE
     Route::controller(OrderController::class)->group(function(){
-                                    Route::get('/admin/orders','index')->name('admin.order.orders');
+                                    Route::get('/admin/orders','orders')->name('admin.order.orders');
                                     Route::get('/admin/order/{order_id}', 'show')->name('admin.order.show');
                                     Route::put('/admin/order/update', 'updateStatus')->name('admin.order.update');
     });
@@ -100,5 +105,4 @@ Route::middleware(['auth',AuthAdmin::class])->group(function (){
     });
 });
 Route::view('/chat', 'chat')->middleware('auth');
-Route::get('/chat/history', [CustomerChatController::class, 'getConversationHistory'])->middleware('auth')->name('get.conversation');
-Route::post('/chat', [CustomerChatController::class, 'chat'])->name('ai.assistant')->middleware('auth');
+

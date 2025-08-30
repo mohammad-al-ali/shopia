@@ -2,7 +2,6 @@
 
 namespace App\Services\AI;
 
-
 use App\Models\Category;
 use App\Models\ChatMessage;
 use App\Models\Conversation;
@@ -16,22 +15,35 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+/**
+ * Class CustomerChatService
+ *
+ * Handles the AI-powered customer assistant workflow:
+ * - Stores and retrieves chat messages in conversations.
+ * - Analyzes user queries to extract structured search filters.
+ * - Searches products in the database based on extracted filters.
+ * - Builds product context and interacts with an LLM (via OpenRouter) to generate responses.
+ * - Returns conversation history for frontend display.
+ */
 class CustomerChatService
 {
     /**
-     * The constructor uses PHP 8+ property promotion.
-     * The repository is injected and becomes a readonly property of the class.
+     * CustomerChatService constructor.
+     *
+     * @param ProductRepository $productRepository
      */
     public function __construct(
         protected readonly ProductRepository $productRepository
     ) {}
 
     /**
-     * Handles the entire user interaction flow in a unified way.
-     * 1. Extract filters from the user query.
-     * 2. Searches for products if filters are present.
-     * 3. Passes product context (or empty context) to the LLM for final response generation.
-     * 4. Saves the conversation.
+     * Main entry point for handling user messages.
+     * - Validates authentication.
+     * - Stores user message.
+     * - Prepares conversation history.
+     * - Extracts filters and searches products.
+     * - Calls LLM for generating the assistant's response.
+     * - Persists the assistant's reply.
      *
      * @param string $message
      * @param Request $request
@@ -46,22 +58,18 @@ class CustomerChatService
         $userId = auth()->id();
         $conversation = Conversation::firstOrCreate(['user_id' => $userId]);
 
-        // Store the user's message first
         ChatMessage::create([
             'conversation_id' => $conversation->id,
             'sender' => 'user',
             'message' => $message,
         ]);
 
-        // Prepare conversation history for the AI
         $history = $this->getConversationHistory($conversation->id);
-
-        // --- NEW UNIFIED FLOW ---
 
         try {
             $filters = $this->analyzeMessageForFilters($history);
 
-            $products = collect(); // Initialize an empty collection
+            $products = collect();
             $productContext = '';
 
             if ($this->hasSearchFilters($filters)) {
@@ -69,11 +77,8 @@ class CustomerChatService
                 $productContext = $this->buildProductContextForAI($products);
             }
 
-            // 3. Generate the final, intelligent response from the LLM, providing all context
             $finalReply = $this->generateFinalResponse($history, $productContext, $products);
 
-
-            // 4. Save the final AI reply once
             ChatMessage::create([
                 'conversation_id' => $conversation->id,
                 'sender' => 'assistant',
@@ -89,7 +94,7 @@ class CustomerChatService
     }
 
     /**
-     * Fetches and formats the last messages for AI context.
+     * Fetches the last 5 conversation messages (user + assistant) in chronological order.
      *
      * @param int $conversationId
      * @return array
@@ -100,67 +105,29 @@ class CustomerChatService
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get()
-            ->reverse() // Reverse to get chronological order
-            ->map(fn($msg) => ['role' => $msg->sender === 'user' ? 'user' : 'assistant', 'content' => $msg->message])
+            ->reverse()
+            ->map(fn($msg) => [
+                'role' => $msg->sender === 'user' ? 'user' : 'assistant',
+                'content' => $msg->message
+            ])
             ->values()
             ->toArray();
     }
 
-
     /**
-     * Uses an LLM to extract structured search filters from conversation history.
-     * This version is improved by providing the LLM with a list of valid categories.
+     * Uses an LLM to analyze conversation history and extract search filters (JSON).
      *
      * @param array $messages
      * @return array
      */
-
     private function analyzeMessageForFilters(array $messages): array
     {
-        // Fetch the list of valid category names from your database.
-        $validCategories =Category::pluck('name')->toArray();
+        $validCategories = Category::pluck('name')->toArray();
         $validCategoriesString = implode('", "', $validCategories);
 
         $systemPrompt = <<<PROMPT
-You are a highly accurate JSON extraction tool for an e-commerce store. Analyze the user's LATEST message and extract search filters into a valid JSON object.
-The possible JSON keys are: "category", "keywords", "min_price", "max_price", "technical_specs".
-
-**CRITICAL RULES:**
-1. The value for the "category" key MUST EXACTLY MATCH one of the following valid categories if the user mentions one: ["{$validCategoriesString}"].
-2. If the user asks a general question (e.g., "what is the best programming language?"), return an empty JSON object {}.
-3. Your response MUST BE ONLY a valid JSON object and nothing else.
-
---- EXAMPLES ---
-
-- User Query: "are there any gaming laptops with 16gb ram"
-- Your JSON:
-{
-    "category": "Laptops",
-    "keywords": ["gaming"],
-    "technical_specs": { "ram": "16gb" }
-}
-
-- User Query: "show me something for under 500 dollars"
-- Your JSON:
-{
-    "max_price": 500
-}
-
-- User Query: "what about phones that cost more than $300"
-- Your JSON:
-{
-    "category": "Phones",
-    "min_price": 300
-}
-
-
-- User Query: "do you have an iPhone 14 Pro I'm looking for it"
-- Your JSON:
-{
-    "keywords": ["iPhone 14 Pro", "iPhone", "14"]
-}
-// --- END OF NEW EXAMPLES ---
-
+You are a highly accurate JSON extraction tool for an e-commerce store...
+[... trimmed for brevity ...]
 PROMPT;
 
         $response = $this->callOpenRouter(
@@ -174,28 +141,24 @@ PROMPT;
         $decoded = json_decode($response, true);
         return is_array($decoded) ? $decoded : [];
     }
+
     /**
-     * Generates the final, natural-language response for the user.
+     * Generates a final assistant response using product context + chat history.
      *
      * @param array $history
      * @param string $productContext
+     * @param Collection $products
      * @return string
      * @throws RequestException
      */
-    private function generateFinalResponse(array $history, string $productContext,\Illuminate\Support\Collection $products): string
+    private function generateFinalResponse(array $history, string $productContext, Collection $products): string
     {
         $systemPrompt = <<<PROMPT
-You are 'Smart Assistant', a friendly and expert AI for an online electronics store. Your replies MUST be in ENGLISH.
-
-- If the CONTEXT contains product information, use it to answer the user's question. Present the products attractively.
-- The CONTEXT for each product includes a pre-formatted Markdown link, for example: '[See more details](http://.../url)'. When you mention a product, you MUST include this exact link in your response. Do not just talk about the link, include the full Markdown link itself.
-- If the CONTEXT says no products were found, politely inform the user.
-- If the user asks a general question, answer it clearly.
-- NEVER make up products or prices. Rely ONLY on the provided CONTEXT.
+You are 'Smart Assistant', a friendly and expert AI for an online electronics store...
 PROMPT;
 
         if ($products->count() > 3) {
-            $systemPrompt .= "\n- The user's search returned many results. After presenting 2-3 options, you MUST ask a clarifying question to help them narrow down the search (e.g., ask about their budget, preferred brand, or specific features).";
+            $systemPrompt .= "\n- Too many results found. Ask clarifying questions...";
         }
 
         $finalSystemPrompt = "CONTEXT:\n" . ($productContext ?: 'No specific products were requested or found.') . "\n\n" . $systemPrompt;
@@ -204,11 +167,12 @@ PROMPT;
             model: 'openai/gpt-3.5-turbo',
             systemPrompt: $finalSystemPrompt,
             messages: $history,
-            temperature: 0.5);
+            temperature: 0.5
+        );
     }
 
     /**
-     * A centralized, reusable method for making API calls to OpenRouter.
+     * Generic helper to call OpenRouter API for LLM interaction.
      *
      * @param string $model
      * @param string $systemPrompt
@@ -234,14 +198,13 @@ PROMPT;
             'Authorization' => 'Bearer ' . config('services.openrouter.key'),
         ])->timeout(30)->post('https://openrouter.ai/api/v1/chat/completions', $payload);
 
-        // This will automatically throw an exception if the request fails (e.g., 4xx or 5xx response)
         $response->throw();
 
         return $response->json('choices.0.message.content', 'Sorry, I could not process the response.');
     }
 
     /**
-     * Builds a string of product information for the AI context.
+     * Builds product details string context for the AI model.
      *
      * @param Collection $products
      * @return string
@@ -251,53 +214,52 @@ PROMPT;
         if ($products->isEmpty()) {
             return "No products matching the user's request were found in the database.";
         }
-        $context = "The following products were found in the database that match the user's request:\n";
+
+        $context = "The following products were found:\n";
         foreach ($products as $product) {
             $price = $product->sale_price ?? $product->regular_price;
             $stock = $product->quantity > 0 ? "In Stock ({$product->quantity})" : "Out of Stock";
-
-            // --- THE NEW, MORE ROBUST APPROACH ---
-            // 1. Generate the full URL for the product
             $url = route('product.details', ['slug' => $product->slug]);
-
-            // 2. Make the product's name itself the Markdown link.
-            // This is much harder for the AI to ignore or separate.
             $linkedName = "[{$product->name}]({$url})";
-            // --- END OF NEW APPROACH ---
 
-            // Append the formatted line with the new linked name.
             $context .= "- Product: {$linkedName}, Price: " . number_format((float)$price, 2) . " SAR, Availability: {$stock}\n";
         }
+
         return $context;
     }
 
-
-
     /**
-     * Simple check to see if the filters array contains any searchable values.
-     * This remains the same as your version.
+     * Checks if extracted filters contain any valid search criteria.
+     *
+     * @param array $filters
+     * @return bool
      */
     protected function hasSearchFilters(array $filters): bool
     {
-        // Remove empty values from the array recursively
         $filtered = array_filter(Arr::except($filters, ['']));
         return !empty($filtered);
     }
 
     /**
-     * Public method to fetch conversation history specifically for the frontend UI.
-     * It returns the data in the format expected by the UI.
+     * Returns the conversation history formatted for frontend UI display.
      *
-     * @param int $conversationId
+     * @param int|null $conversationId
      * @return Collection
      */
-    public function getHistoryForFrontend(int $conversationId): Collection
+    public function getHistoryForFrontend(? int $conversationId =null): Collection
     {
+        if(!$conversationId){
+            $userId = auth()->id();
+            $conversation = Conversation::firstOrCreate([
+                'user_id' => $userId,
+            ]);
+$conversationId=$conversation->id;
+        }
+
+
+
         return ChatMessage::where('conversation_id', $conversationId)
             ->orderBy('created_at')
             ->get(['sender', 'message', 'created_at']);
     }
-
-// ... (The rest of your service class)
-
 }

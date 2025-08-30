@@ -6,19 +6,39 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
 
+/**
+ * Class CouponService
+ *
+ * Handles coupon application, removal, and discount calculations.
+ */
 class CouponService
 {
+    /**
+     * Coupon repository instance.
+     *
+     * @var CouponRepository
+     */
     protected CouponRepository $couponRepository;
 
-
+    /**
+     * CouponService constructor.
+     *
+     * @param CouponRepository $couponRepository
+     */
     public function __construct(CouponRepository $couponRepository)
     {
         $this->couponRepository = $couponRepository;
     }
 
+    /**
+     * Apply a coupon code to the current cart.
+     *
+     * @param string $code
+     * @return bool Returns true if coupon is valid and applied, false otherwise.
+     */
     public function applyCoupon(string $code): bool
     {
-        $cartSubtotal = Cart::instance('cart')->subtotal(); // احصل على المجموع كعدد عشري
+        $cartSubtotal = Cart::instance('cart')->subtotal();
 
         $coupon = $this->couponRepository->findValidByCode($code, $cartSubtotal);
 
@@ -38,12 +58,22 @@ class CouponService
         return true;
     }
 
+    /**
+     * Remove an applied coupon from the session.
+     *
+     * @return void
+     */
     public function removeCoupon(): void
     {
         Session::forget('coupon');
         Session::forget('discounts');
     }
 
+    /**
+     * Calculate discount, tax, and total after applying coupon.
+     *
+     * @return void
+     */
     public function calculateDiscount(): void
     {
         if (!Session::has('coupon')) {
@@ -52,12 +82,11 @@ class CouponService
         }
 
         $coupon = Session::get('coupon');
-
         $discount = 0;
 
         if ($coupon['type'] === 'fixed') {
             $discount = $coupon['value'];
-        } else { // نسبة مئوية
+        } else {
             $discount = (Cart::instance('cart')->subtotal() * $coupon['value']) / 100;
         }
 
