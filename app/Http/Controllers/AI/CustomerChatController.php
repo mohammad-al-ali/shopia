@@ -16,24 +16,9 @@ class CustomerChatController extends Controller
     {
         $this->chatService = $chatService;
     }
-    public function getConversationHistory(Request $request)
+    public function getConversationHistory()
     {
-        if (!auth()->check()) {
-            return response()->json(['error' => 'You should login or register first.'], 401);
-        }
-
-        $userId = auth()->id();
-
-        // الحصول على المحادثة أو إنشاؤها
-        $conversation = Conversation::firstOrCreate([
-            'user_id' => $userId,
-        ]);
-
-        // جلب الرسائل المرتبطة بالمحادثة
-        $messages = ChatMessage::where('conversation_id', $conversation->id)
-            ->orderBy('created_at')
-            ->get(['sender', 'message', 'created_at']);
-
+        $messages = $this->chatService->getHistoryForFrontend();
         return response()->json($messages);
     }
     public function chat(Request $request)

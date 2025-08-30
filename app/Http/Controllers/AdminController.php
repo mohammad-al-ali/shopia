@@ -1,88 +1,110 @@
 <?php
-namespace App\Http\Controllers;
-use App\Models\Order;
 
+namespace App\Http\Controllers;
+
+use App\Models\Order;
 use App\Repositories\OrderRepository;
 use Illuminate\Support\Facades\DB;
 
-
-
+/**
+ * Class AdminController
+ *
+ * Handles the logic for the admin dashboard, including:
+ * - Displaying all orders with pagination.
+ * - Aggregating dashboard statistics (total orders, amounts by status, etc.).
+ * - Building monthly data summaries depending on the database type.
+ */
 class AdminController extends Controller
 {
+    /**
+     * The repository for managing order data.
+     *
+     * @var OrderRepository
+     */
     protected OrderRepository $orderRepository;
+
+    /**
+     * AdminController constructor.
+     *
+     * @param OrderRepository $orderRepository
+     */
     public function __construct(OrderRepository $orderRepository)
     {
-        $this->orderRepository=$orderRepository;
+        $this->orderRepository = $orderRepository;
     }
+
+    /**
+     * Display the admin dashboard with order statistics and monthly reports.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index()
     {
-        // First, figure out which database we're using
+        // Determine which database type is currently in use,ether MySql ,or SQLite.
         $dbType = app(\App\Services\DatabaseTypeService::class)->getDatabaseType();
 
-        // Get paginated orders as usual
+        // Retrieve paginated orders
         $orders = $this->orderRepository->getAllPaginated();
 
-        // Gather some overall stats about orders
-        $dashboardData = DB::table('orders') // make sure your table name is lowercase
-        ->selectRaw("
-            SUM(total_amount) AS TotalAmount,
-            SUM(CASE WHEN status='processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
-            SUM(CASE WHEN status='delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
-            SUM(CASE WHEN status='canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount,
-            COUNT(*) AS Total,
-            SUM(CASE WHEN status='processing' THEN 1 ELSE 0 END) AS TotalProcessing,
-            SUM(CASE WHEN status='delivered' THEN 1 ELSE 0 END) AS TotalDelivered,
-            SUM(CASE WHEN status='canceled' THEN 1 ELSE 0 END) AS TotalCanceled
-        ")
+        // Gather overall statistics about orders
+        $dashboardData = DB::table('orders')
+            ->selectRaw("
+                SUM(total_amount) AS TotalAmount,
+                SUM(CASE WHEN status='processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
+                SUM(CASE WHEN status='delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
+                SUM(CASE WHEN status='canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount,
+                COUNT(*) AS Total,
+                SUM(CASE WHEN status='processing' THEN 1 ELSE 0 END) AS TotalProcessing,
+                SUM(CASE WHEN status='delivered' THEN 1 ELSE 0 END) AS TotalDelivered,
+                SUM(CASE WHEN status='canceled' THEN 1 ELSE 0 END) AS TotalCanceled
+            ")
             ->first();
 
-        // Now build monthly data, but it depends on the DB type
+        // Build monthly data depending on the database type
         if ($dbType === 'MySQL') {
-            // MySQL has handy date functions, so use those
-            $monthlyData = \App\Models\Order::selectRaw("
-            MONTH(created_at) AS MonthNo,
-            DATE_FORMAT(created_at, '%b') AS MonthName,
-            SUM(total_amount) AS TotalAmount,
-            SUM(CASE WHEN status = 'processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
-            SUM(CASE WHEN status = 'delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
-            SUM(CASE WHEN status = 'canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount
-        ")
+            $monthlyData = Order::selectRaw("
+                MONTH(created_at) AS MonthNo,
+                DATE_FORMAT(created_at, '%b') AS MonthName,
+                SUM(total_amount) AS TotalAmount,
+                SUM(CASE WHEN status = 'processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
+                SUM(CASE WHEN status = 'delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
+                SUM(CASE WHEN status = 'canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount
+            ")
                 ->whereYear('created_at', now()->year)
                 ->groupByRaw("YEAR(created_at), MONTH(created_at), DATE_FORMAT(created_at, '%b')")
                 ->get();
 
         } elseif ($dbType === 'SQLite') {
-            // SQLite doesn’t have those functions, so use strftime instead
-            $monthlyData = \App\Models\Order::selectRaw("
-            CAST(strftime('%m', created_at) AS INTEGER) AS MonthNo,
-            strftime('%b', created_at) AS MonthName,
-            SUM(total_amount) AS TotalAmount,
-            SUM(CASE WHEN status = 'processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
-            SUM(CASE WHEN status = 'delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
-            SUM(CASE WHEN status = 'canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount
-        ")
+            $monthlyData = Order::selectRaw("
+                CAST(strftime('%m', created_at) AS INTEGER) AS MonthNo,
+                strftime('%b', created_at) AS MonthName,
+                SUM(total_amount) AS TotalAmount,
+                SUM(CASE WHEN status = 'processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
+                SUM(CASE WHEN status = 'delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
+                SUM(CASE WHEN status = 'canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount
+            ")
                 ->whereRaw("strftime('%Y', created_at) = ?", [now()->year])
                 ->groupByRaw("strftime('%Y', created_at), strftime('%m', created_at), strftime('%b', created_at)")
                 ->get();
 
         } else {
-            // If it’s something else, just return an empty collection for safety
+            // Fallback: empty collection if DB type is unsupported
             $monthlyData = collect();
         }
 
-        // Prepare the monthly amounts for charts or whatever you need
+        // Prepare monthly amounts for chart rendering
         $AmountM = $monthlyData->pluck('TotalAmount')->implode(',');
         $ProcessingAmountM = $monthlyData->pluck('TotalProcessingAmount')->implode(',');
         $DeliveredAmountM = $monthlyData->pluck('TotalDeliveredAmount')->implode(',');
         $CanceledAmountM = $monthlyData->pluck('TotalCanceledAmount')->implode(',');
 
-        // Also sum up the totals for the whole year
+        // Calculate yearly totals
         $TotalAmount = $monthlyData->sum('TotalAmount');
         $TotalProcessingAmount = $monthlyData->sum('TotalProcessingAmount');
         $TotalDeliveredAmount = $monthlyData->sum('TotalDeliveredAmount');
         $TotalCanceledAmount = $monthlyData->sum('TotalCanceledAmount');
 
-        // Finally, pass everything to the view
+        // Return the admin dashboard view with all required data
         return view('admin.index', compact(
             'orders',
             'dashboardData',

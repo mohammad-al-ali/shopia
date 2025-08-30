@@ -21,3 +21,11 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Laravel Boost local files
+/boost
+/.boost
+boost.json
+Claude.md
+cursor.json
+Junie.md
