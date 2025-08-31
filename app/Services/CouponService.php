@@ -82,15 +82,19 @@ class CouponService
         }
 
         $coupon = Session::get('coupon');
+
+        // ✅ تحويل subtotal إلى float
+        $cartSubtotal = floatval(str_replace(',', '', Cart::instance('cart')->subtotal()));
+
         $discount = 0;
 
         if ($coupon['type'] === 'fixed') {
             $discount = $coupon['value'];
         } else {
-            $discount = (Cart::instance('cart')->subtotal() * $coupon['value']) / 100;
+            $discount = ($cartSubtotal * $coupon['value']) / 100;
         }
 
-        $subtotalAfterDiscount = Cart::instance('cart')->subtotal() - $discount;
+        $subtotalAfterDiscount = $cartSubtotal - $discount;
         $taxAfterDiscount = ($subtotalAfterDiscount * config('cart.tax')) / 100;
         $totalAfterDiscount = $subtotalAfterDiscount + $taxAfterDiscount;
 
