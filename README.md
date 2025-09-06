@@ -34,7 +34,7 @@ The project also integrates an **AI Shopping Assistant**, trained on the store�
 
 - **Contact With Us**
     - Form with name, email, phone, and message
-    - Stores messages in DB and sends admin notifications
+    - Store messages in DB and sends admin notifications
 
 ---
 
@@ -52,10 +52,52 @@ The project also integrates an **AI Shopping Assistant**, trained on the store�
     - Symfony Mailer
 
 ---
-
 ## 📂 Installation
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/your-username/shopia.git
+   git clone https://github.com/mohammad-al-ali/shopia.git
    cd shopia
+
+2. Install dependencies
+   ```bash
+   composer install
+   npm install && npm run build
+
+3. Create .env file and configure database & mail settings
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+
+4. Run migrations and seed database
+   ```bash
+   php artisan migrate --seed
+5. Start development server
+   ```bash
+   php artisan serve
+---
+
+📌 Future Enhancements
+
+⭐ Product Reviews & Ratings (5-star system)
+
+🔔 Real-time Notifications (Admin & Customer)
+
+📦 Inventory tracking
+
+📊 Sales analytics dashboard
+
+
+
+---
+
+👤 Author
+
+Muhammad AlAli
+
+📧 Email: mhmdalrab6@gmail.com
+
+🌐 LinkedIn: linkedin.com/in/MuhammadAlAli
+
+💻 GitHub: github.com/mohammad-al-ali
+
