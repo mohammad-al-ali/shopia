@@ -344,10 +344,10 @@
                         <a href="{{route('cart.index')}}" class="navigation__link">Cart</a>
                     </li>
                     <li class="navigation__item">
-                        <a href="about.html" class="navigation__link">About</a>
+                        <a href="{{route('about')}}" class="navigation__link">About</a>
                     </li>
                     <li class="navigation__item">
-                        <a href="contact.html" class="navigation__link">Contact</a>
+                        <a href="{{route('contact')}}" class="navigation__link">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -433,10 +433,10 @@
                         <a href="{{route('cart.index')}}" class="navigation__link">Cart</a>
                     </li>
                     <li class="navigation__item">
-                        <a href="about.html" class="navigation__link">About</a>
+                        <a href="{{route('about')}}" class="navigation__link">About</a>
                     </li>
                     <li class="navigation__item">
-                        <a href="contact.html" class="navigation__link">Contact</a>
+                        <a href="{{route('contact')}}" class="navigation__link">Contact</a>
                     </li>
                 </ul>
             </navv>
@@ -601,7 +601,7 @@
                     <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Careers</a></li>
                     <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Affiliates</a></li>
                     <li class="sub-menu__item"><a href="blog_list1.html" class="menu-link menu-link_us-s">Blog</a></li>
-                    <li class="sub-menu__item"><a href="contact-2.html" class="menu-link menu-link_us-s">Contact Us</a></li>
+                    <li class="sub-menu__item"><a href="{{route('contact')}}" class="menu-link menu-link_us-s">Contact Us</a></li>
                 </ul>
             </div>
 
