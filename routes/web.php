@@ -5,6 +5,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -16,7 +17,10 @@ use App\Http\Middleware\AuthAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 Auth::routes();
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::view('/about','about')->name('about');
+Route::view('/contact','contact')->name('contact');
 Route::get('/shop/{slug}', [ProductController::class, 'show'])->name('product.details');
 Route::controller(ShopController::class)->group(function (){
                                   Route::get('/shop', 'index')->name('shop.index');
@@ -105,4 +109,3 @@ Route::middleware(['auth',AuthAdmin::class])->group(function (){
     });
 });
 Route::view('/chat', 'chat')->middleware('auth');
-

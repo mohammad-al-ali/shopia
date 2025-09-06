@@ -134,10 +134,9 @@ class OrderService
             'order_id' => $order->id,
             'user_id' => $user_id,
             'payment_method' => $request->mode,
-            'transaction_id' => $request->transaction_id,
+            'transaction_id' => $request->transaction_id ?? strtoupper($request->mode) . '-' . uniqid(),
             'amount' => Session::get('checkout')['total'],
         ]);
-
         Cart::instance('cart')->destroy();
         Session::forget(['discounts', 'checkout', 'coupon']);
         Session::put('order_id', $order->id);

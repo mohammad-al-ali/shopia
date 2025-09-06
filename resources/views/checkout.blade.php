@@ -236,7 +236,7 @@
                             <div class="checkout__payment-methods">
                                 <div class="form-check">
                                     <input class="form-check-input form-check-input_fill" type="radio" name="mode"
-                                           id="mode1" value="card">
+                                           id="mode1" value="credit_card">
                                     <label class="form-check-label" for="mode1">
                                         Debit or Credit Cart
                                         <p class="option-detail">
@@ -260,7 +260,7 @@
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input form-check-input_fill" type="radio" name="mode"
-                                           id="mode3" value="cod">
+                                           id="mode3" value="cash">
                                     <label class="form-check-label" for="mode3">
                                         Cash on Delivery
                                         <p class="option-detail">
