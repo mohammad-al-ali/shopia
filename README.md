@@ -1,40 +1,69 @@
-# 🛒 SHOPIA
+# 🛒 SHOPIA – Laravel E-Commerce Platform
 
-SHOPIA is a **full-featured e-commerce platform** built with Laravel 12 and MySQL.  
-It provides a smooth shopping experience for customers and powerful management tools for administrators.
+SHOPIA is a full-featured e-commerce web application built with **Laravel 12**.  
+It provides a robust shopping experience for customers and a powerful dashboard for administrators.  
+The project is designed with **clean architecture principles** to ensure scalability, maintainability, and readability.
 
-The project also integrates an **AI Shopping Assistant**, trained on the store’s product database, which helps users discover, compare, and choose the right products.
+---
+## 🤖 AI Shopping Assistant
 
+SHOPIA includes a built-in **AI Assistant** powered by **GPT-3.5** and trained on the store’s product database.  
+This assistant enhances the shopping experience by:
+
+- Helping customers find products that match their needs and preferences
+- Comparing multiple products and providing clear recommendations
+- Keeping chat history so users don’t lose previous conversations
+- Generating direct links to product detail pages for quick navigation
+
+This integration makes the store more interactive, reduces user confusion when choosing between similar products, and improves overall customer satisfaction.
 ---
 
 ## 🚀 Features
 
-- **Authentication & Security**
-    - User authentication with **Laravel Sanctum**
-    - Secure login & registration
+### 👥 Customer Features
+- Browse products with advanced filtering (categories, brands, price, etc.)
+- View detailed product pages with images and descriptions
+- Add/update/remove items from the cart
+- Apply/remove discount coupons at checkout
+- Complete checkout with order confirmation
+- Contact form with email notifications to admin
 
-- **Product Management**
-    - Product catalog with categories
-    - Add, update, delete products
-    - Product images with **Intervention Image**
+### 🛠️ Admin Features
+- Dashboard with order statistics and monthly revenue summaries
+- Manage products (CRUD)
+- Manage categories and brands (CRUD)
+- Manage slides/banners (CRUD)
+- Manage coupons (CRUD)
+- View and manage orders (update status, filter by payment mode)
+- View customer contact messages
 
-- **Shopping Cart & Orders**
-    - Full shopping cart functionality with **SurfsideMedia/ShoppingCart**
-    - Order management system
-    - Checkout flow
+---
 
-- **AI Assistant 🤖**
-    - Integrated with GPT-3.5
-    - Recommends and compares products
-    - Provides personalized shopping experience
+## 🏗️ Architecture
 
-- **Notifications**
-    - Email notifications with **Symfony Mailer**
-    - Admin gets notified of new contact messages
+The project follows **best practices** in Laravel development:
 
-- **Contact With Us**
-    - Form with name, email, phone, and message
-    - Store messages in DB and sends admin notifications
+- **MVC (Model–View–Controller)** for structured code organization
+- **Repository Pattern** for abstracting database queries and ensuring testability
+- **Service Layer** for handling business logic and keeping controllers lightweight
+
+This architecture ensures **scalability** and allows easy integration of new features such as product reviews, 5-star ratings, and real-time notifications.
+
+---
+
+## 📂 Controllers Overview
+
+- **AdminController** → Handles dashboard statistics and monthly reports
+- **BrandController** → Manage brands (CRUD)
+- **CartController** → Shopping cart operations (add, update, delete, clear)
+- **CategoryController** → Manage categories (CRUD)
+- **CheckoutController** → Validate cart and process checkout
+- **ContactController** → Store contact messages and notify admin via email
+- **CouponController** → Manage coupons (CRUD + apply/remove at checkout)
+- **OrderController** → Manage orders (both admin and customer views)
+- **ProductController** → Manage products (CRUD + show details on frontend)
+- **ShopController** → Display shop page with filtering (categories, brands, etc.)
+- **SlideController** → Manage homepage slides/banners
 
 ---
 

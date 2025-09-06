@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Notification;
 class ContactController extends Controller
 {
     /**
+     *  ContactController
      * Store a newly created contact message in storage and send a notification.
      *
      * @param Request $request The incoming HTTP request.
