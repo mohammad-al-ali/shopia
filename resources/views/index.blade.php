@@ -1,12 +1,14 @@
 @extends('layouts.app')
 @section('content')
 <style>
+ body{
+    background-color: #f0e9e9ff;
+ }
 .image-slider {
   width: 100%;
   border:200px;
   overflow: hidden;
   aspect-ratio: 16 / 9;
-  background: #f2f2f2;
   border-radius: 8px;
 
 }
@@ -103,7 +105,6 @@
                             </div>
                         </div>
 
-                        <a href="#" class="btn-link default-underline text-uppercase fw-medium mt-3">View All</a>
                     </div>
                     <div class="col-md-6 col-lg-8 col-xl-80per">
                         <div class="position-relative">
@@ -151,10 +152,10 @@
                                             </a>
                                         </div>
 
-                                        <div class="pc__info position-relative">
-                                            <h6 class="pc__title"><a href="{{asset('details.html')}}">ASUS ROG STRIX GF850HLXX10 VR2 Gaming</a></h6>
+                                        <div class="pc__info position-relative" style="color:white;">
+                                            <h6 class="pc__title"  ><a href="{{asset('details.html')}}">ASUS ROG STRIX GF850HLXX10 VR2 Gaming</a></h6>
                                             <div class="product-card__price d-flex">
-                                                <span class="money price text-secondary">4400$</span>
+                                                <span class="money price text-secondary" style="color:white">4400$</span>
                                             </div>
 
                                             <div
@@ -458,8 +459,8 @@
                                 Starting at $500
                             </div>
                             <div class="category-banner__item-content">
-                                <h3 class="mb-0">PS5 SLIM</h3>
-                                <a href="#" class="btn-link default-underline text-uppercase fw-medium">Shop Now</a>
+                                <h3 class="mb-0 category-banner-title">PS5 SLIM</h3>
+                                <a href="#" class="btn-link default-underline text-uppercase fw-medium category-banner-link">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -471,8 +472,8 @@
                                 Starting at $340
                             </div>
                             <div class="category-banner__item-content">
-                                <h3 class="mb-0">PS4 NEW 1000GB</h3>
-                                <a href="#" class="btn-link default-underline text-uppercase fw-medium">Shop Now</a>
+                                <h3 class="mb-0 category-banner-title">PS4 NEW 1000GB</h3>
+                                <a href="#" class="btn-link default-underline text-uppercase fw-medium category-banner-link">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -790,4 +791,6 @@ Xiaomi 138 cm (55 inch) FX Ultra HD 4K</a></h6>
         <div class="mb-3 mb-xl-5 pt-1 pb-4"></div>
 
     </main>
+
+
 @endsection

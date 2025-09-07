@@ -4,7 +4,9 @@
     .brand-list li, .category-list li {
         line-height: 40px;
     }
+    body{
 
+    }
     .brand-list li .chk-brand, .category-list li .chk-category{
         width: 1rem;
         height: 1rem;
@@ -12,6 +14,307 @@
         border: 0.125rem solid currentColor;
         border-radius: 0;
         margin-right: 0.75rem;
+    }
+
+
+    .shop-sidebar {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+    }
+
+    [data-theme="dark"] .shop-sidebar {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .accordion-item {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .accordion-button {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .accordion-body {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .product-card {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .slide-split_text {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .slideshow-bg {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .slide-split {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .swiper-slide {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .slideshow-text {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .aside-header {
+        background-color: var(--bg-primary) !important;
+    }
+
+    [data-theme="dark"] .list-item {
+        background-color: transparent !important;
+    }
+
+    [data-theme="dark"] .menu-link {
+        background-color: transparent !important;
+    }
+
+    .accordion-item {
+        background-color: var(--card-bg) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .accordion-button {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .accordion-body {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .list-item {
+        color: var(--text-primary) !important;
+    }
+
+    .menu-link {
+        color: var(--text-primary) !important;
+    }
+
+    .menu-link:hover {
+        color: var(--text-secondary) !important;
+    }
+
+    .shop-acs__select {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .shop-acs__select:focus {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--text-secondary) !important;
+    }
+
+    .btn-link {
+        color: var(--text-primary) !important;
+    }
+
+    .btn-link:hover {
+        color: var(--text-secondary) !important;
+    }
+
+    .product-card {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .pc__title a {
+        color: var(--text-primary) !important;
+    }
+
+    .pc__title a:hover {
+        color: var(--text-secondary) !important;
+    }
+
+    .pc__category {
+        color: var(--text-secondary) !important;
+    }
+
+    .money {
+        color: var(--text-primary) !important;
+    }
+
+    .price-old {
+        color: var(--text-muted) !important;
+    }
+
+    .reviews-note {
+        color: var(--text-secondary) !important;
+    }
+
+    .breadcrumb a {
+        color: var(--text-primary) !important;
+    }
+
+    .breadcrumb a:hover {
+        color: var(--text-secondary) !important;
+    }
+
+    .breadcrumb-separator {
+        color: var(--text-secondary) !important;
+    }
+
+    .slide-split_text {
+        background-color: var(--bg-secondary) !important;
+    }
+
+    .slideshow-text h1,
+    .slideshow-text h2,
+    .slideshow-text p {
+        color: var(--text-primary) !important;
+    }
+
+    .price-range-slider {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .price-range__info span {
+        color: var(--text-primary) !important;
+    }
+
+    .price-range__min,
+    .price-range__max {
+        color: var(--text-primary) !important;
+    }
+
+    /* Improved price filter for dark mode */
+    .price-range-slider {
+        background: var(--border-color) !important;
+        border: none !important;
+        border-radius: 10px !important;
+        height: 8px !important;
+        margin: 20px 0 !important;
+        outline: none !important;
+        -webkit-appearance: none !important;
+    }
+
+    .price-range-slider::-webkit-slider-thumb {
+        background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%) !important;
+        border: 2px solid #007bff !important;
+        border-radius: 50% !important;
+        width: 22px !important;
+        height: 22px !important;
+        cursor: pointer !important;
+        box-shadow: 0 3px 8px rgba(0,123,255,0.4), 0 0 0 3px rgba(0,123,255,0.1) !important;
+        -webkit-appearance: none !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .price-range-slider::-webkit-slider-thumb:hover {
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        border-color: #ffffff !important;
+        transform: scale(1.15) !important;
+        box-shadow: 0 4px 12px rgba(0,123,255,0.6), 0 0 0 4px rgba(0,123,255,0.2) !important;
+    }
+
+    .price-range-slider::-webkit-slider-thumb:active {
+        background: linear-gradient(135deg, #0056b3 0%, #004085 100%) !important;
+        transform: scale(1.1) !important;
+        box-shadow: 0 2px 6px rgba(0,123,255,0.8), 0 0 0 2px rgba(0,123,255,0.3) !important;
+    }
+
+    .price-range-slider::-moz-range-thumb {
+        background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%) !important;
+        border: 2px solid #007bff !important;
+        border-radius: 50% !important;
+        width: 22px !important;
+        height: 22px !important;
+        cursor: pointer !important;
+        box-shadow: 0 3px 8px rgba(0,123,255,0.4), 0 0 0 3px rgba(0,123,255,0.1) !important;
+        -moz-appearance: none !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .price-range-slider::-moz-range-thumb:hover {
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        border-color: #ffffff !important;
+        transform: scale(1.15) !important;
+        box-shadow: 0 4px 12px rgba(0,123,255,0.6), 0 0 0 4px rgba(0,123,255,0.2) !important;
+    }
+
+    .price-range-slider::-moz-range-thumb:active {
+        background: linear-gradient(135deg, #0056b3 0%, #004085 100%) !important;
+        transform: scale(1.1) !important;
+        box-shadow: 0 2px 6px rgba(0,123,255,0.8), 0 0 0 2px rgba(0,123,255,0.3) !important;
+    }
+
+    .price-range-slider::-webkit-slider-track {
+        background: linear-gradient(90deg, #404040 0%, #606060 50%, #404040 100%) !important;
+        border-radius: 10px !important;
+        height: 8px !important;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.3) !important;
+    }
+
+    .price-range-slider::-moz-range-track {
+        background: linear-gradient(90deg, #404040 0%, #606060 50%, #404040 100%) !important;
+        border-radius: 10px !important;
+        height: 8px !important;
+        border: none !important;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.3) !important;
+    }
+
+    /* Price range info styling */
+    .price-range__info {
+        background: var(--bg-primary) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 8px !important;
+        padding: 10px 15px !important;
+        margin-top: 15px !important;
+    }
+
+    .price-range__min,
+    .price-range__max {
+        color: var(--text-primary) !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+    }
+
+    /* Clean sidebar without separators */
+    .shop-sidebar {
+        position: relative;
+        border: none;
+        box-shadow: none;
+    }
+
+    .shop-list {
+        position: relative;
+        border: none;
+        box-shadow: none;
+    }
+
+    /* Enhanced accordion styling */
+    .accordion-button {
+        background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 8px !important;
+        margin-bottom: 10px !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .accordion-button:hover {
+        background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background: linear-gradient(135deg, var(--text-secondary) 0%, var(--bg-primary) 100%) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .accordion-item {
+        border: 1px solid var(--border-color) !important;
+        border-radius: 8px !important;
+        margin-bottom: 15px !important;
+        overflow: hidden !important;
     }
 </style>
     <main class="pt-90">
@@ -112,13 +415,12 @@
                     </div>
                 </div>
 
-
                 <div class="accordion" id="price-filters">
-                    <div class="accordion-item mb-4">
-                        <h5 class="accordion-header mb-2" id="accordion-heading-price">
+                    <div class="accordion-item mb-4 pb-3">
+                        <h5 class="accordion-header" id="accordion-heading-price">
                             <button class="accordion-button p-0 border-0 fs-5 text-uppercase" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#accordion-filter-price" aria-expanded="true" aria-controls="accordion-filter-price">
-                                Price
+                                Price Range
                                 <svg class="accordion-button__icon type2" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg">
                                     <g aria-hidden="true" stroke="none" fill-rule="evenodd">
                                         <path
@@ -129,22 +431,28 @@
                         </h5>
                         <div id="accordion-filter-price" class="accordion-collapse collapse show border-0"
                              aria-labelledby="accordion-heading-price" data-bs-parent="#price-filters">
-                            <input class="price-range-slider" type="text" name="price_range" value="" data-slider-min="1"
-                                   data-slider-max="500" data-slider-step="5" data-slider-value="[{{$min_price}},{{$max_price}}]" data-currency="$" />
-                            <div class="price-range__info d-flex align-items-center mt-2">
-                                <div class="me-auto">
-                                    <span class="text-secondary">Min Price: </span>
-                                    <span class="price-range__min">$1</span>
-                                </div>
-                                <div>
-                                    <span class="text-secondary">Max Price: </span>
-                                    <span class="price-range__max">$500</span>
+                            <div class="accordion-body px-0 pb-0 pt-3">
+                                <input class="price-range-slider" type="text" name="price_range" value="" data-slider-min="1"
+                                    data-slider-max="2100" data-slider-step="5" data-slider-value="[1,2100]" data-currency="$" />
+                                <div class="price-range__info d-flex align-items-center mt-3">
+                                    <div class="me-auto">
+                                        <span class="text-secondary">Min Price: </span>
+                                        <span class="price-range__min fw-bold">$1</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-secondary">Max Price: </span>
+                                        <span class="price-range__max fw-bold">$2100</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+        </div>
+
+
 
             <div class="shop-list flex-grow-1">
                 <div class="swiper-container js-swiper-slider slideshow slideshow_small slideshow_split" data-settings='{
@@ -164,18 +472,16 @@
                         <div class="swiper-slide">
                             <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
                                 <div class="slide-split_text position-relative d-flex align-items-center"
-                                     style="background-color: #f5e6e0;">
+                                     style="background-color:#f5e6e0;">
                                     <div class="slideshow-text container p-3 p-xl-5">
-                                        <h2
-                                            class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
-                                            Women's <br /><strong>ACCESSORIES</strong></h2>
-                                        <p class="mb-0 animate animate_fade animate_btt animate_delay-5">Accessories are the best way to
-                                            update your look. Add a title edge with new styles and new colors, or go for timeless pieces.</h6>
+                                        <h1> BUY easily</h1 >
+                                        <p class="mb-0 animate animate_fade animate_btt animate_delay-5">You can pay with your credit card
+                                            ,your paybal or even cash  .</h6>
                                     </div>
                                 </div>
                                 <div class="slide-split_media position-relative">
                                     <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                                        <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450"
+                                        <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="430" height="550"
                                              alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                                     </div>
                                 </div>
@@ -189,14 +495,14 @@
                                     <div class="slideshow-text container p-3 p-xl-5">
                                         <h2
                                             class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
-                                            Women's <br /><strong>ACCESSORIES</strong></h2>
-                                        <p class="mb-0 animate animate_fade animate_btt animate_delay-5">Accessories are the best way to
-                                            update your look. Add a title edge with new styles and new colors, or go for timeless pieces.</h6>
+                                             <br /><strong>Visit us</strong></h2>
+                                        <p class="mb-0 animate animate_fade animate_btt animate_delay-5">visit us in our markets
+                                            in Damascus,Aleppo and Homs.</h6>
                                     </div>
                                 </div>
                                 <div class="slide-split_media position-relative">
-                                    <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                                        <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450"
+                                    <div class="slideshow-bg" style="background-color:#f5e6e0;">
+                                        <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="730" height="450"
                                              alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                                     </div>
                                 </div>
@@ -206,18 +512,18 @@
                         <div class="swiper-slide">
                             <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
                                 <div class="slide-split_text position-relative d-flex align-items-center"
-                                     style="background-color: #f5e6e0;">
+                                     style="background-color:#f5e6e0;">
                                     <div class="slideshow-text container p-3 p-xl-5">
                                         <h2
                                             class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
-                                            Women's <br /><strong>ACCESSORIES</strong></h2>
-                                        <p class="mb-0 animate animate_fade animate_btt animate_delay-5">Accessories are the best way to
-                                            update your look. Add a title edge with new styles and new colors, or go for timeless pieces.</h6>
+                                             <br /><strong>%10 OFF</strong></h2>
+                                        <p class="mb-0 animate animate_fade animate_btt animate_delay-5">See our latest offer and make your
+                                            bid now.</h6>
                                     </div>
                                 </div>
                                 <div class="slide-split_media position-relative">
                                     <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                                        <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450"
+                                        <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="730" height="450"
                                              alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                                     </div>
                                 </div>
@@ -286,15 +592,15 @@
                                 <div class="swiper-container background-img js-swiper-slider" data-settings='{"resizeObserver": true}'>
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                            <a href="{{route('product.details',['slug'=>$product->slug])}}"><img loading="lazy" src="{{asset('storage/products_image/' . $product->image)}}" width="330" height="400" alt="{{$product->name}}"></a>
+                                            <a href="{{route('product.details',['slug'=>$product->slug])}}"><img loading="lazy" src="{{asset('storage/products_image/' . $product->image)}}" width="530" height="500" alt="{{$product->name}}"></a>
                                         </div>
                                      @foreach(explode(',',$product->images) as $img)
                                             <div class="swiper-slide">
-                                                <a href="{{route('product.details',['slug'=>$product->slug])}}"><img loading="lazy" src="{{asset('storage/products_image/gallery/' . $img)}}"  alt="{{$product->name}}" width="330" height="400" class="pc__img"></a>
+                                                <a href="{{route('product.details',['slug'=>$product->slug])}}"><img loading="lazy" src="{{asset('storage/products_image/gallery/' . $img)}}"  alt="{{$product->name}}" width="530" height="400" class="pc__img"></a>
                                             </div>
                                         @endforeach
                                     </div>
-                                    <span class="pc__img-prev"><svg width="7" height="11" viewBox="0 0 7 11"
+                                    <span class="pc__img-prev"><svg width="9" height="11" viewBox="1 0 7 11"
                                                                     xmlns="http://www.w3.org/2000/svg">
                       <use href="#icon_prev_sm" />
                     </svg>
@@ -366,6 +672,7 @@
 <form id="frmfilter" method="GET" action="{{route('shop.index')}}">
     @csrf
     <input type="hidden" name="page" value="{{$products->currentPage()}}" />
+
     <input type="hidden" name="size" id="size" value="{{$size}}" />
     <input type="hidden" name="order" id="order" value="{{$order}}" />
     <input type="hidden" name="brands" id="hdnBrands" />
@@ -424,3 +731,6 @@
         });
     </script>
 @endpush
+<style>
+
+</style>
