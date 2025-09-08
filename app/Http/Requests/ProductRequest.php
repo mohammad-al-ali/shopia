@@ -28,9 +28,9 @@ class ProductRequest extends FormRequest
             'warehouse_price' => ['required', 'numeric', 'min:0'],
             'featured' => ['nullable', 'boolean'],
             'quantity' => ['required', 'integer', 'min:0'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'image' => ['nullable', 'image', 'max:2048'],
             'images' => ['nullable', 'array'],
-            'images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'images.*' => ['nullable', 'image', 'max:2048'],
             'brand_id' => ['nullable', 'exists:brands,id'],
             'category_id' => ['nullable', 'exists:categories,id'],
         ];

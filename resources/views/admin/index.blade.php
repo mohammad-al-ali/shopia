@@ -273,18 +273,19 @@
                     var options = {
                         series: [{
                             name: 'Total',
-                            data: [{{$AmountM}}]
+                            data: {!! $AmountM !!}
                         }, {
                             name: 'Processing',
-                            data: [{{$ProcessingAmountM}}]
+                            data: {!! $ProcessingAmountM !!}
                         },
                             {
                                 name: 'Delivered',
-                                data: [{{$DeliveredAmountM}}]
+                                data: {!! $DeliveredAmountM !!}
                             }, {
                                 name: 'Canceled',
-                                data: [{{$CanceledAmountM}}]
+                                data: {!! $CanceledAmountM !!}
                             }],
+
                         chart: {
                             type: 'bar',
                             height: 325,

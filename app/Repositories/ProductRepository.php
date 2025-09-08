@@ -37,6 +37,10 @@ class ProductRepository
         return $product->update($data);
     }
 
+    public function getFeature(){
+       return Product::where('featured',true)->get( );
+    }
+
     public function getCategoryList()
     {
         return Category::select('id','name')->orderBy('name')->get();

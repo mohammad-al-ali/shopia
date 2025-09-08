@@ -58,45 +58,44 @@ class AdminController extends Controller
                 SUM(CASE WHEN status='delivered' THEN 1 ELSE 0 END) AS TotalDelivered,
                 SUM(CASE WHEN status='canceled' THEN 1 ELSE 0 END) AS TotalCanceled
             ")
-            ->first();
+            ->first();if ($dbType === 'MySQL') {
+        $monthlyData = Order::selectRaw("
+        MONTH(created_at) AS MonthNo,
+        DATE_FORMAT(created_at, '%b') AS MonthName,
+        SUM(total_amount) AS TotalAmount,
+        SUM(CASE WHEN status = 'processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
+        SUM(CASE WHEN status = 'delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
+        SUM(CASE WHEN status = 'canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount
+    ")
+            ->whereYear('created_at', now()->year)
+            ->groupByRaw("YEAR(created_at), MONTH(created_at), DATE_FORMAT(created_at, '%b')")
+            ->get();
 
-        // Build monthly data depending on the database type
-        if ($dbType === 'MySQL') {
-            $monthlyData = Order::selectRaw("
-                MONTH(created_at) AS MonthNo,
-                DATE_FORMAT(created_at, '%b') AS MonthName,
-                SUM(total_amount) AS TotalAmount,
-                SUM(CASE WHEN status = 'processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
-                SUM(CASE WHEN status = 'delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
-                SUM(CASE WHEN status = 'canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount
-            ")
-                ->whereYear('created_at', now()->year)
-                ->groupByRaw("YEAR(created_at), MONTH(created_at), DATE_FORMAT(created_at, '%b')")
-                ->get();
+    } elseif ($dbType === 'SQLite') {
+        $monthlyData = Order::selectRaw("
+        CAST(strftime('%m', created_at) AS INTEGER) AS MonthNo,
+        SUM(total_amount) AS TotalAmount,
+        SUM(CASE WHEN status = 'processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
+        SUM(CASE WHEN status = 'delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
+        SUM(CASE WHEN status = 'canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount
+    ")
+            ->whereYear('created_at', now()->year)
+            ->groupByRaw("strftime('%Y', created_at), strftime('%m', created_at)")
+            ->get()
+            ->map(function ($row) {
+                // تحويل رقم الشهر لاسم (Jan, Feb, ...)
+                $row->MonthName = date('M', mktime(0, 0, 0, $row->MonthNo, 1));
+                return $row;
+            });
 
-        } elseif ($dbType === 'SQLite') {
-            $monthlyData = Order::selectRaw("
-                CAST(strftime('%m', created_at) AS INTEGER) AS MonthNo,
-                strftime('%b', created_at) AS MonthName,
-                SUM(total_amount) AS TotalAmount,
-                SUM(CASE WHEN status = 'processing' THEN total_amount ELSE 0 END) AS TotalProcessingAmount,
-                SUM(CASE WHEN status = 'delivered' THEN total_amount ELSE 0 END) AS TotalDeliveredAmount,
-                SUM(CASE WHEN status = 'canceled' THEN total_amount ELSE 0 END) AS TotalCanceledAmount
-            ")
-                ->whereRaw("strftime('%Y', created_at) = ?", [now()->year])
-                ->groupByRaw("strftime('%Y', created_at), strftime('%m', created_at), strftime('%b', created_at)")
-                ->get();
-
-        } else {
-            // Fallback: empty collection if DB type is unsupported
-            $monthlyData = collect();
-        }
-
+    } else {
+        $monthlyData = collect();
+    }
         // Prepare monthly amounts for chart rendering
-        $AmountM = $monthlyData->pluck('TotalAmount')->implode(',');
-        $ProcessingAmountM = $monthlyData->pluck('TotalProcessingAmount')->implode(',');
-        $DeliveredAmountM = $monthlyData->pluck('TotalDeliveredAmount')->implode(',');
-        $CanceledAmountM = $monthlyData->pluck('TotalCanceledAmount')->implode(',');
+        $AmountM = $monthlyData->pluck('TotalAmount');
+        $ProcessingAmountM = $monthlyData->pluck('TotalProcessingAmount');
+        $DeliveredAmountM = $monthlyData->pluck('TotalDeliveredAmount');
+        $CanceledAmountM = $monthlyData->pluck('TotalCanceledAmount');
 
         // Calculate yearly totals
         $TotalAmount = $monthlyData->sum('TotalAmount');

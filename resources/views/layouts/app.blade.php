@@ -51,21 +51,6 @@
         <path
             d="M13.5625 7.44043C13.5625 3.69434 10.5273 0.65918 6.78125 0.65918C3.03516 0.65918 0 3.69434 0 7.44043C0 10.3389 1.77734 12.7725 4.29297 13.7568C4.23828 13.2373 4.18359 12.417 4.32031 11.8154C4.45703 11.2959 5.11328 8.45215 5.11328 8.45215C5.11328 8.45215 4.92188 8.04199 4.92188 7.44043C4.92188 6.51074 5.46875 5.7998 6.15234 5.7998C6.72656 5.7998 7 6.2373 7 6.75684C7 7.33105 6.61719 8.20605 6.42578 9.02637C6.28906 9.68262 6.78125 10.2295 7.4375 10.2295C8.64062 10.2295 9.57031 8.97168 9.57031 7.13965C9.57031 5.49902 8.39453 4.37793 6.75391 4.37793C4.8125 4.37793 3.69141 5.82715 3.69141 7.30371C3.69141 7.90527 3.91016 8.53418 4.18359 8.8623C4.23828 8.91699 4.23828 8.99902 4.23828 9.05371C4.18359 9.27246 4.04688 9.7373 4.04688 9.81934C4.01953 9.95605 3.9375 9.9834 3.80078 9.92871C2.95312 9.51855 2.43359 8.28809 2.43359 7.27637C2.43359 5.14355 3.99219 3.1748 6.91797 3.1748C9.26953 3.1748 11.1016 4.87012 11.1016 7.1123C11.1016 9.43652 9.625 11.3232 7.57422 11.3232C6.89062 11.3232 6.23438 10.9678 6.01562 10.5303C6.01562 10.5303 5.6875 11.8428 5.60547 12.1436C5.44141 12.7451 5.03125 13.4834 4.75781 13.9209C5.38672 14.1396 6.07031 14.2217 6.78125 14.2217C10.5273 14.2217 13.5625 11.1865 13.5625 7.44043Z" />
     </symbol>
-    <symbol id="icon_search" viewBox="0 0 20 20">
-        <g clip-path="url(#clip0_6_7)">
-            <path
-                d="M8.80758 0C3.95121 0 0 3.95121 0 8.80758C0 13.6642 3.95121 17.6152 8.80758 17.6152C13.6642 17.6152 17.6152 13.6642 17.6152 8.80758C17.6152 3.95121 13.6642 0 8.80758 0ZM8.80758 15.9892C4.84769 15.9892 1.62602 12.7675 1.62602 8.80762C1.62602 4.84773 4.84769 1.62602 8.80758 1.62602C12.7675 1.62602 15.9891 4.84769 15.9891 8.80758C15.9891 12.7675 12.7675 15.9892 8.80758 15.9892Z"
-                fill="currentColor" />
-            <path
-                d="M19.7618 18.6122L15.1006 13.9509C14.783 13.6333 14.2686 13.6333 13.951 13.9509C13.6334 14.2683 13.6334 14.7832 13.951 15.1005L18.6122 19.7618C18.771 19.9206 18.9789 20 19.187 20C19.3949 20 19.603 19.9206 19.7618 19.7618C20.0795 19.4444 20.0795 18.9295 19.7618 18.6122Z"
-                fill="currentColor" />
-        </g>
-        <defs>
-            <clipPath id="clip0_6_7">
-                <rect width="20" height="20" fill="white" />
-            </clipPath>
-        </defs>
-    </symbol>
     <symbol id="icon_user" viewBox="0 0 20 20">
         <g clip-path="url(#clip0_6_29)">
             <path
@@ -302,33 +287,7 @@
 
     <nav
         class="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
-        <div class="container">
-            <form action="#" method="GET" class="search-field position-relative mt-4 mb-3">
-                <div class="position-relative">
-                    <input class="search-field__input w-100 border rounded-1" type="text" name="search-keyword"
-                           placeholder="Search products" />
-                    <button class="btn-icon search-popup__submit pb-0 me-2" type="submit">
-                        <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <use href="#icon_search" />
-                        </svg>
-                        <style>
-                          nav{
 
-                          top:0;
-                          z-index:1000;
-                          margin-right:200px;
-                          }
-                        </style>
-                    </button>
-                    <button class="btn-icon btn-close-lg search-popup__reset pb-0 me-2" type="reset"></button>
-                </div>
-
-                <div class="position-absolute start-0 top-100 m-0 w-100">
-                    <div class="search-result"></div>
-                </div>
-            </form>
-        </div>
 
         <div class="container">
             </style>
@@ -445,51 +404,7 @@
             </style>
 
             <div class="header-tools d-flex align-items-center">
-                <div class="header-tools__item hover-container">
-                    <div class="js-hover__open position-relative">
-                        <a class="js-search-popup search-field__actor" href="#">
-                            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_search" />
-                            </svg>
-                            <i class="btn-icon btn-close-lg"></i>
-                        </a>
-                    </div>
 
-                    <div class="search-popup js-hidden-content">
-                        <form action="#" method="GET" class="search-field container">
-                            <p class="text-uppercase text-secondary fw-medium mb-4">What are you looking for?</p>
-                            <div class="position-relative">
-                                <input class="search-field__input search-popup__input w-100 fw-medium" type="text"
-                                       name="search-keyword" placeholder="Search products" />
-                                <button class="btn-icon search-popup__submit" type="submit">
-                                    <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <use href="#icon_search" />
-                                    </svg>
-                                </button>
-                                <button class="btn-icon btn-close-lg search-popup__reset" type="reset"></button>
-                            </div>
-
-                            <div class="search-popup__results">
-                                <div class="sub-menu search-suggestion">
-                                    <h6 class="sub-menu__title fs-base">Quicklinks</h6>
-                                    <ul class="sub-menu__list list-unstyled">
-                                        <li class="sub-menu__item"><a href="shop2.html" class="menu-link menu-link_us-s">New Arrivals</a>
-                                        </li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Dresses</a></li>
-                                        <li class="sub-menu__item"><a href="shop3.html" class="menu-link menu-link_us-s">Accessories</a>
-                                        </li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Footwear</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Sweatshirt</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="search-result row row-cols-5"></div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
 @guest
                 <div class="header-tools__item hover-container">
                     <a href="{{route('login')}}" class="header-tools__item">
@@ -502,7 +417,6 @@
                 @else
                     <div class="header-tools__item hover-container">
                         <a href="{{\Illuminate\Support\Facades\Auth::user()->role==='admin'? route('admin.index'):route('user.index')}}" class="header-tools__item">
-                            <span class="pr-6px">{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
                             <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <use href="#icon_user" />
@@ -510,11 +424,6 @@
                         </a>
                     </div>
                 @endguest
-                <a href="wishlist.html" class="header-tools__item">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <use href="#icon_heart" />
-                    </svg>
-                </a>
 
                 <a href="{{route('cart.index')}}" class="header-tools__item header-tools__cart">
                     <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -536,157 +445,40 @@
 
 
 <hr class="mt-5 text-secondary" />
-<footer class="footer footer_type_2">
-    <div class="footer-middle container">
-        <div class="row row-cols-lg-5 row-cols-2">
-            <div class="footer-column footer-store-info col-12 mb-4 mb-lg-0">
-                <div class="logo">
-                    <a href="{{route('home.index')}}">
-                        <img src="assets/images/logo.png" alt="SurfsideMedia" class="logo__image d-block" />
-                    </a>
-                </div>
-                <p class="footer-address">123 Beach Avenue, Surfside City, CA 00000</p>
-                <p class="m-0"><strong class="fw-medium">contact@surfsidemedia.in</strong></p>
-                <p><strong class="fw-medium">+1 000-000-0000</strong></p>
-
-                <ul class="social-links list-unstyled d-flex flex-wrap mb-0">
-                    <li>
-                        <a href="#" class="footer__social-link d-block">
-                            <svg class="svg-icon svg-icon_facebook" width="9" height="15" viewBox="0 0 9 15"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_facebook" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__social-link d-block">
-                            <svg class="svg-icon svg-icon_twitter" width="14" height="13" viewBox="0 0 14 13"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_twitter" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__social-link d-block">
-                            <svg class="svg-icon svg-icon_instagram" width="14" height="13" viewBox="0 0 14 13"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_instagram" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__social-link d-block">
-                            <svg class="svg-icon svg-icon_youtube" width="16" height="11" viewBox="0 0 16 11"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M15.0117 1.8584C14.8477 1.20215 14.3281 0.682617 13.6992 0.518555C12.5234 0.19043 7.875 0.19043 7.875 0.19043C7.875 0.19043 3.19922 0.19043 2.02344 0.518555C1.39453 0.682617 0.875 1.20215 0.710938 1.8584C0.382812 3.00684 0.382812 5.46777 0.382812 5.46777C0.382812 5.46777 0.382812 7.90137 0.710938 9.07715C0.875 9.7334 1.39453 10.2256 2.02344 10.3896C3.19922 10.6904 7.875 10.6904 7.875 10.6904C7.875 10.6904 12.5234 10.6904 13.6992 10.3896C14.3281 10.2256 14.8477 9.7334 15.0117 9.07715C15.3398 7.90137 15.3398 5.46777 15.3398 5.46777C15.3398 5.46777 15.3398 3.00684 15.0117 1.8584ZM6.34375 7.68262V3.25293L10.2266 5.46777L6.34375 7.68262Z" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__social-link d-block">
-                            <svg class="svg-icon svg-icon_pinterest" width="14" height="15" viewBox="0 0 14 15"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_pinterest" />
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
+<footer class="footer bg-light py-5">
+    <div class="container">
+        <div class="row text-center text-md-start">
+            <!-- الشعار -->
+            <div class="col-md-4 mb-4 mb-md-0 d-flex flex-column align-items-center align-items-md-start">
+                <img src="assets/images/logo.png" alt="ElectroStore" style="height: 50px;" class="mb-3">
+                <p class="mb-1">📍 Syria,Aleppo,furqan</p>
+                <p class="mb-1">📧 shopia@gmail.com</p>
+                <p class="mb-0">📞 +963 935 200 536</p>
             </div>
 
-            <div class="footer-column footer-menu mb-4 mb-lg-0">
-                <h6 class="sub-menu__title text-uppercase">Company</h6>
-                <ul class="sub-menu__list list-unstyled">
-                    <li class="sub-menu__item"><a href="about-2.html" class="menu-link menu-link_us-s">About Us</a></li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Careers</a></li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Affiliates</a></li>
-                    <li class="sub-menu__item"><a href="blog_list1.html" class="menu-link menu-link_us-s">Blog</a></li>
-                    <li class="sub-menu__item"><a href="{{route('contact')}}" class="menu-link menu-link_us-s">Contact Us</a></li>
-                </ul>
+            <!-- روابط -->
+            <div class="col-md-4 mb-4 mb-md-0 d-flex flex-column align-items-center">
+                <h6 class="fw-bold mb-3">Quick Links</h6>
+                <a href="{{route('home.index')}}" class="mb-2 text-decoration-none text-dark">Home</a>
+                <a href="{{route('shop.index')}}" class="mb-2 text-decoration-none text-dark">Shop</a>
+                <a href="{{route('contact')}}" class="text-decoration-none text-dark">Contact</a>
             </div>
 
-            <div class="footer-column footer-menu mb-4 mb-lg-0">
-                <h6 class="sub-menu__title text-uppercase">Shop</h6>
-                <ul class="sub-menu__list list-unstyled">
-                    <li class="sub-menu__item"><a href="shop2.html" class="menu-link menu-link_us-s">New Arrivals</a></li>
-                    <li class="sub-menu__item"><a href="shop3.html" class="menu-link menu-link_us-s">Accessories</a></li>
-                    <li class="sub-menu__item"><a href="shop4.html" class="menu-link menu-link_us-s">Men</a></li>
-                    <li class="sub-menu__item"><a href="shop5.html" class="menu-link menu-link_us-s">Women</a></li>
-                    <li class="sub-menu__item"><a href="shop1.html" class="menu-link menu-link_us-s">Shop All</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column footer-menu mb-4 mb-lg-0">
-                <h6 class="sub-menu__title text-uppercase">Help</h6>
-                <ul class="sub-menu__list list-unstyled">
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Customer Service</a></li>
-                    <li class="sub-menu__item"><a href="account_dashboard.html" class="menu-link menu-link_us-s">My Account</a>
-                    </li>
-                    <li class="sub-menu__item"><a href="store_location.html" class="menu-link menu-link_us-s">Find a Store</a>
-                    </li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Legal & Privacy</a></li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Gift Card</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column footer-menu mb-4 mb-lg-0">
-                <h6 class="sub-menu__title text-uppercase">Categories</h6>
-                <ul class="sub-menu__list list-unstyled">
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shirts</a></li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Jeans</a></li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shoes</a></li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Bags</a></li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop All</a></li>
-                </ul>
+            <!-- تواصل اجتماعي -->
+            <div class="col-md-4 d-flex flex-column align-items-center align-items-md-start">
+                <h6 class="fw-bold mb-3">Follow Us</h6>
+                <a href="#" class="mb-2 text-decoration-none text-dark">Facebook</a>
+                <a href="#" class="mb-2 text-decoration-none text-dark">Instagram</a>
+                <a href="#" class="text-decoration-none text-dark">Twitter</a>
             </div>
         </div>
-    </div>
 
-    <div class="footer-bottom">
-        <div class="container d-md-flex align-items-center">
-            <span class="footer-copyright me-auto">©2024 Surfside Media</span>
-            <div class="footer-settings d-md-flex align-items-center">
-                <a href="privacy-policy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms-conditions.html">Terms &amp;
-                    Conditions</a>
-            </div>
-        </div>
-    </div>
-</footer>
+        <!-- خط فاصل -->
+        <hr class="my-4">
 
-
-<footer class="footer-mobile container w-100 px-5 d-md-none bg-body">
-    <div class="row text-center">
-        <div class="col-4">
-            <a href="{{route('home.index')}}" class="footer-mobile__link d-flex flex-column align-items-center">
-                <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <use href="#icon_home" />
-                </svg>
-                <span>Home</span>
-            </a>
-        </div>
-
-        <div class="col-4">
-            <a href="{{route('home.index')}}" class="footer-mobile__link d-flex flex-column align-items-center">
-                <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <use href="#icon_hanger" />
-                </svg>
-                <span>Shop</span>
-            </a>
-        </div>
-
-        <div class="col-4">
-            <a href="{{route('home.index')}}" class="footer-mobile__link d-flex flex-column align-items-center">
-                <div class="position-relative">
-                    <svg class="d-block" width="18" height="18" viewBox="0 0 20 20" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <use href="#icon_heart" />
-                    </svg>
-                    <span class="wishlist-amount d-block position-absolute js-wishlist-count">3</span>
-                </div>
-                <span>Wishlist</span>
-            </a>
+        <!-- الحقوق -->
+        <div class="text-center">
+            <p class="m-0">&copy; 2025 SHOPIA. All rights reserved.</p>
         </div>
     </div>
 </footer>
@@ -702,79 +494,55 @@
 <script src="{{asset('assets/js/theme.js')}}"></script>
 @stack("scripts")
 <style>
-    #ai-assistant-btn {
+    #ai-assistant-icon {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, #4CAF50, #2E7D32);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 26px;
+        z-index: 1000;
+
+        width: 200px;
+        height: 200px;
+
         cursor: pointer;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        animation: popIn 0.6s ease-out;
-        z-index: 9999;
+
+        /* دخول + نبض ملحوظ */
+        animation: popIn 0.6s ease-out forwards,
+        noticeablePulse 3s ease-in-out infinite;
+        transition: transform 0.4s ease;
     }
 
-    #ai-assistant-btn:hover {
-        transform: scale(1.1) rotate(5deg);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    /* تكبير أوضح عند المرور */
+    #ai-assistant-icon:hover {
+        transform: scale(1.2);
     }
 
+    /* حركة دخول */
     @keyframes popIn {
-        0% {
-            transform: scale(0);
-            opacity: 0;
-        }
-        80% {
-            transform: scale(1.1);
-            opacity: 1;
-        }
-        100% {
-            transform: scale(1);
-        }
+        0% { transform: scale(0); opacity: 0; }
+        80% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); }
     }
 
-    /* Optional pulse animation */
-    @keyframes pulse {
-        0% {
-            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
-        }
-        70% {
-            box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
-        }
-        100% {
-            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
-        }
-    }
-
-    #ai-assistant-btn::after {
-        content: "";
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        animation: pulse 2s infinite;
+    /* نبض ملحوظ */
+    @keyframes noticeablePulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
     }
 </style>
+<img src="{{ asset('assets/images/robot-icon.png') }}" id="ai-assistant-icon" alt="AI Assistant" title="AI Assistant">
 
-<div id="ai-assistant-btn" title=" AI ASSISTANT">
-    💬
-</div>
 
 <script>
-    document.getElementById('ai-assistant-btn').addEventListener('click', function () {
-        window.location.href = "{{route('ai.assistant')}}";
+    document.getElementById('ai-assistant-icon').addEventListener('click', function () {
+        // Redirects the user to the AI assistant page.
+        window.location.href = "{{ route('ai.assistant') }}";
     });
 </script>
+
+
+
 </body>
 
 
-</style>
+
 </html>

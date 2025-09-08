@@ -34,57 +34,74 @@
                     @if(\Illuminate\Support\Facades\Session::has('status'))
                         <p class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('status')}}</p>
                     @endif
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <th>Order Number</th>
-                               <td>{{$order->id}}</td>
-                        </tr>
-                        <tr>
-                            <th>Order Date</th>
-                               <td>{{$order->created_at}}</td>
-                            <th>Delivered Date</th>
-                               <td>{{$order->delivered_date}}</td>
-                            <th>Canceled Date</th>
-                               <td>{{$order->canceled_date}}</td>
-                        </tr>
-                        <tr>
-                            <th>Order Status</th>
-                            <td colspan="5">
-                                @if($order->status ==='delivered')
-                                    <span class="badge bg-success">Delivered</span>
-                                @elseif($order->status ==='canceled')
-                                    <span class="badge bg-danger">Canceled</span>
-                                @else
-                                    <span class="badge bg-warning">Processing</span>
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                     <th>Payment Status</th>
-                            <td colspan="6">
-                                @if($order->payment_status ==='completed')
-                                    <span class="badge bg-success">Completed</span>
-                                @elseif($order->payment_status ==='failed')
-                                    <span class="badge bg-danger">Failed</span>
-                                @elseif($order->payment_status ==='pending')
-                                    <span class="badge bg-warning">Processing</span>
-                                @else
-                                    <span class="badge bg-warning">Refunded</span>
-                                @endif
-                            </td>
-                            <td>
-                            <th>Payment Method</th>
-                            <td colspan="5">
-                                @if($payment->payment_method ==='card')
-                                    <span class="badge bg-success">Debit or Credit Cart</span>
-                                @elseif($payment->payment_method ==='paypal')
-                                    <span class="badge bg-danger">PayPal</span>
-                                @else
-                                    <span class="badge bg-warning">Cask on Delivered</span>
-                                @endif
-                            </td>
-                        </tr>
-                    </table>
+                        <table class="table table-striped table-bordered align-middle text-center">
+                            <tbody>
+                            <tr>
+                                <th>Order Number</th>
+                                <td>{{ $order->id }}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Order Date</th>
+                                <td>{{ $order->created_at }}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Delivered Date</th>
+                                <td>{{ $order->delivered_date ?? '—' }}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Canceled Date</th>
+                                <td>{{ $order->canceled_date ?? '—' }}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Order Status</th>
+                                <td>
+                                    @if($order->status === 'delivered')
+                                        <span class="badge bg-success">Delivered</span>
+                                    @elseif($order->status === 'canceled')
+                                        <span class="badge bg-danger">Canceled</span>
+                                    @else
+                                        <span class="badge bg-warning">Processing</span>
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Payment Status</th>
+                                <td>
+                                    @if($order->payment_status === 'completed')
+                                        <span class="badge bg-success">Completed</span>
+                                    @elseif($order->payment_status === 'failed')
+                                        <span class="badge bg-danger">Failed</span>
+                                    @elseif($order->payment_status === 'pending')
+                                        <span class="badge bg-warning">Pending</span>
+                                    @else
+                                        <span class="badge bg-info">Refunded</span>
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Payment Method</th>
+                                <td>
+                                    @php
+                                        $method = $payment->payment_method ?? 'cash';
+                                    @endphp
+
+                                    @if($method === 'card')
+                                        <span class="badge bg-success">Debit or Credit Card</span>
+                                    @elseif($method === 'paypal')
+                                        <span class="badge bg-danger">PayPal</span>
+                                    @else
+                                        <span class="badge bg-warning">Cash on Delivery</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                 </div>
             </div>
 
@@ -155,6 +172,9 @@
 
             <div class="wg-box mt-5">
                 <h5>Transactions</h5>
+                @php
+                $amount =$payment->amount ?? '500';
+                @endphp
                 <table class="table table-striped table-bordered table-transaction">
                     <tbody>
                     <tr>
@@ -165,7 +185,7 @@
                         <th>Discount</th>+
                         <td class="text-right">${{$order->discount}}</td>
                         <th>Total</th>
-                        <td class="text-right">${{$payment->amount}}</td>
+                        <td class="text-right">${{$amount}}</td>
                     </tr>
                     </tbody>
                 </table>
