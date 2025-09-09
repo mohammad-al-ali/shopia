@@ -130,21 +130,29 @@ class OrderService
             ]);
         }
 
+        // ⚡ تعديل الجزء المتعلق بالدفع
+        $paymentStatus = ($request->mode === 'paypal') ? 'pending' : 'completed';
+
         $this->orderRepository->createPayment([
             'order_id' => $order->id,
             'user_id' => $user_id,
             'payment_method' => $request->mode,
             'transaction_id' => $request->transaction_id ?? strtoupper($request->mode) . '-' . uniqid(),
             'amount' => Session::get('checkout')['total'],
+            'status' => $paymentStatus, // <-- هنا نحدد حالة الدفع
         ]);
-        Cart::instance('cart')->destroy();
-        Session::forget(['discounts', 'checkout', 'coupon']);
+
+        // 🟢 بالنسبة لـ PayPal ما نمسح السلة قبل التأكيد
+        if ($request->mode !== 'paypal') {
+            Cart::instance('cart')->destroy();
+            Session::forget(['discounts', 'checkout', 'coupon']);
+        }
+
         Session::put('order_id', $order->id);
         Session::put('mode', $request->mode);
 
         return $order;
     }
-
     /**
      * Set or update the checkout session data based on cart contents and discounts.
      *

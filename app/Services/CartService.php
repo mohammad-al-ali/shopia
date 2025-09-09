@@ -77,10 +77,10 @@ class CartService
     /**
      * Remove a specific item from the cart.
      *
-     * @param int $rowId
+     *
      * @return void
      */
-    public function delete(int $rowId): void
+    public function delete($rowId): void
     {
         Cart::instance('cart')->remove($rowId);
     }

@@ -13,7 +13,8 @@ class Payment extends Model
 'amount',
 'created_at',
 'updated_at',
-'user_id'];
+'user_id'
+    ];
     public function order(){
         return $this->belongsTo(Order::class);
 
