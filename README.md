@@ -21,12 +21,13 @@ This integration makes the store more interactive, reduces user confusion when c
 ## 🚀 Features
 
 ### 👥 Customer Features
-- Browse products with advanced filtering (categories, brands, price, etc.)
-- View detailed product pages with images and descriptions
-- Add/update/remove items from the cart
-- Apply/remove discount coupons at checkout
-- Complete checkout with order confirmation
-- Contact form with email notifications to admin
+- Browse products with advanced filtering (categories, brands, price, etc.).
+- View detailed product pages with images and descriptions.
+- Add/update/remove items from the cart.
+- Apply/remove discount coupons at checkout.
+- Complete checkout with order confirmation.
+- Secure checkout with multiple payment methods(PayPal , Cash on Delivery).
+- Contact form with email notifications to admin.
 
 ### 🛠️ Admin Features
 - Dashboard with order statistics and monthly revenue summaries
@@ -67,18 +68,27 @@ This architecture ensures **scalability** and allows easy integration of new fea
 
 ---
 
-## 🛠️ Tech Stack
+🛠️ Tech Stack
 
-- **Framework**: Laravel 12 (PHP 8.2)
-- **Database**: MySQL
-- **Frontend**: Laravel UI + Bootstrap
-- **Packages**:
-    - Laravel Sanctum
-    - Fruitcake/laravel-cors
-    - GuzzleHTTP
-    - Intervention Image
-    - SurfsideMedia/ShoppingCart
-    - Symfony Mailer
+Framework: Laravel 12 (PHP 8.2)
+
+Database: MySQL
+
+Frontend: Laravel UI + Bootstrap
+
+
+
+---
+
+⚙️ Requirements
+
+PHP >= 8.2
+
+Composer: 2.8.8
+
+Node.js: 22.14.0
+
+NPM: 11.5.2
 
 ---
 ## 📂 Installation
