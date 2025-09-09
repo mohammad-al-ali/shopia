@@ -4,6 +4,11 @@
         <div class="mb-4 pb-4"></div>
         <section class="shop-checkout container">
             <h2 class="page-title">Shipping and Checkout</h2>
+
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+
             <div class="checkout-steps">
                 <a href="{{route('cart.index')}}" class="checkout-steps__item active">
                     <span class="checkout-steps__item-number">01</span>
@@ -251,11 +256,6 @@
                                            id="mode2" value="paypal">
                                     <label class="form-check-label" for="mode2">
                                         Paypal
-                                        <p class="option-detail">
-                                            Phasellus sed volutpat orci. Fusce eget lore mauris vehicula elementum gravida nec dui. Aenean
-                                            aliquam varius ipsum, non ultricies tellus sodales eu. Donec dignissim viverra nunc, ut aliquet
-                                            magna posuere eget.
-                                        </p>
                                     </label>
                                 </div>
                                 <div class="form-check">

@@ -109,3 +109,13 @@ Route::middleware(['auth',AuthAdmin::class])->group(function (){
     });
 });
 Route::view('/chat', 'chat')->middleware('auth');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// PayPal routes
+Route::get('/paypal/success', [OrderController::class, 'paypalSuccess'])->name('paypal.success');
+Route::get('/paypal/cancel', [OrderController::class, 'paypalCancel'])->name('paypal.cancel');
+
+

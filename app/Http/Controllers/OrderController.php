@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
+use App\Models\Order;
 use App\Repositories\OrderRepository;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Srmklive\PayPal\Facades\PayPal;
 
 /**
  * Class OrderController
@@ -92,9 +94,70 @@ class OrderController extends Controller
      */
     public function create(OrderRequest $request)
     {
-        $this->orderService->createOrderFromCheckout($request);
+        $order = $this->orderService->createOrderFromCheckout($request);
 
+        // إذا كانت طريقة الدفع PayPal
+        if ($request->mode === 'paypal') {
+            $provider = PayPal::setProvider();
+            $provider->setApiCredentials(config('paypal'));
+            $provider->getAccessToken();
+
+            $checkoutData = [
+                "intent" => "CAPTURE",
+                "purchase_units" => [
+                    [
+                        "amount" => [
+                            "currency_code" => "USD",
+                            "value" => $order->total_amount
+                        ]
+                    ]
+                ],
+                "application_context" => [
+                    "cancel_url" => route('paypal.cancel'),
+                    "return_url" => route('paypal.success'),
+                ]
+            ];
+
+            $response = $provider->createOrder($checkoutData);
+
+            if (isset($response['id']) && $response['status'] === 'CREATED') {
+                foreach ($response['links'] as $link) {
+                    if ($link['rel'] === 'approve') {
+                        return redirect()->away($link['href']);
+                    }
+                }
+            }
+
+            return redirect()->route('cart.checkout')->with('error', 'Something went wrong with PayPal.');
+        }
+
+        // أي طرق دفع أخرى
         return redirect()->route('order-confirmation');
+    }
+
+    public function paypalSuccess(Request $request)
+    {
+        $provider = PayPal::setProvider();
+        $provider->setApiCredentials(config('paypal'));
+        $provider->getAccessToken();
+
+        $response = $provider->capturePaymentOrder($request['token']);
+
+        if (isset($response['status']) && $response['status'] === 'COMPLETED') {
+
+            $orderId = Session::get('order_id');
+ Order::find($orderId)->update(['payment_status' => 'completed']);
+
+            return redirect()->route('order-confirmation')->with('success', 'Payment successful!');
+        }
+
+        return redirect()->route('cart.checkout')->with('error', 'Payment failed or cancelled.');
+    }
+
+    public function paypalCancel()
+    {
+        return redirect()->route('cart.checkout')->with('error', 'You cancelled the PayPal payment.');
+
     }
 
     /**
