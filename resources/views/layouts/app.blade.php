@@ -283,6 +283,16 @@
 
         </style>
 
+        <!-- Dark Mode Toggle Button for Mobile -->
+        <button id="dark-mode-toggle-mobile" class="header-tools__item" title="Toggle Dark Mode">
+            <svg id="sun-icon-mobile" class="d-block" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <path d="M12 2V4M12 20V22M4 12H2M6.31412 6.31412L4.8999 4.8999M17.6859 6.31412L19.1001 4.8999M6.31412 17.69L4.8999 19.1042M17.6859 17.69L19.1001 19.1042M22 12H20M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg id="moon-icon-mobile" class="d-block" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+
         <a href="#" class="header-tools__item header-tools__cart js-open-aside" data-aside="cartDrawer">
             <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <use href="#icon_cart" />
@@ -516,6 +526,16 @@
                     </svg>
                 </a>
 
+                <!-- Dark Mode Toggle Button -->
+                <button id="dark-mode-toggle" class="header-tools__item" title="Toggle Dark Mode">
+                    <svg id="sun-icon" class="d-block" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path d="M12 2V4M12 20V22M4 12H2M6.31412 6.31412L4.8999 4.8999M17.6859 6.31412L19.1001 4.8999M6.31412 17.69L4.8999 19.1042M17.6859 17.69L19.1001 19.1042M22 12H20M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <svg id="moon-icon" class="d-block" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
                 <a href="{{route('cart.index')}}" class="header-tools__item header-tools__cart">
                     <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -610,8 +630,6 @@
                 <ul class="sub-menu__list list-unstyled">
                     <li class="sub-menu__item"><a href="shop2.html" class="menu-link menu-link_us-s">New Arrivals</a></li>
                     <li class="sub-menu__item"><a href="shop3.html" class="menu-link menu-link_us-s">Accessories</a></li>
-                    <li class="sub-menu__item"><a href="shop4.html" class="menu-link menu-link_us-s">Men</a></li>
-                    <li class="sub-menu__item"><a href="shop5.html" class="menu-link menu-link_us-s">Women</a></li>
                     <li class="sub-menu__item"><a href="shop1.html" class="menu-link menu-link_us-s">Shop All</a></li>
                 </ul>
             </div>
@@ -632,9 +650,6 @@
             <div class="footer-column footer-menu mb-4 mb-lg-0">
                 <h6 class="sub-menu__title text-uppercase">Categories</h6>
                 <ul class="sub-menu__list list-unstyled">
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shirts</a></li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Jeans</a></li>
-                    <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shoes</a></li>
                     <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Bags</a></li>
                     <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop All</a></li>
                 </ul>
@@ -700,6 +715,77 @@
 <script src="{{asset('assets/js/plugins/swiper.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/countdown.js')}}"></script>
 <script src="{{asset('assets/js/theme.js')}}"></script>
+
+<!-- Dark Mode JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get theme from localStorage or default to light
+    const currentTheme = localStorage.getItem('theme') || 'light';
+
+    // Apply the saved theme
+    applyTheme(currentTheme);
+
+    // Get toggle buttons
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
+
+    // Add event listeners to both toggle buttons
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleTheme);
+    }
+
+    if (darkModeToggleMobile) {
+        darkModeToggleMobile.addEventListener('click', toggleTheme);
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
+
+    function applyTheme(theme) {
+        // Set the data-theme attribute on the html element
+        document.documentElement.setAttribute('data-theme', theme);
+
+        // Update icon visibility
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const sunIconMobile = document.getElementById('sun-icon-mobile');
+        const moonIconMobile = document.getElementById('moon-icon-mobile');
+
+        if (theme === 'dark') {
+            // Show sun icon, hide moon icon
+            if (sunIcon) sunIcon.style.display = 'block';
+            if (moonIcon) moonIcon.style.display = 'none';
+            if (sunIconMobile) sunIconMobile.style.display = 'block';
+            if (moonIconMobile) moonIconMobile.style.display = 'none';
+        } else {
+            // Show moon icon, hide sun icon
+            if (sunIcon) sunIcon.style.display = 'none';
+            if (moonIcon) moonIcon.style.display = 'block';
+            if (sunIconMobile) sunIconMobile.style.display = 'none';
+            if (moonIconMobile) moonIconMobile.style.display = 'block';
+        }
+    }
+
+    // Listen for system theme changes
+    if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Only apply system theme if no user preference is saved
+        if (!localStorage.getItem('theme')) {
+            mediaQuery.addEventListener('change', function(e) {
+                const systemTheme = e.matches ? 'dark' : 'light';
+                applyTheme(systemTheme);
+            });
+        }
+    }
+});
+</script>
+
 @stack("scripts")
 <style>
     #ai-assistant-btn {
@@ -775,6 +861,578 @@
 </script>
 </body>
 
+<style>
+.footer{
+    background-color:#f0e9e9ff;
+}
+.category-banner{
+    background-color:#f0e9e9ff;
+}
 
+/* Dark Mode CSS Variables and Styles */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #f0e9e9;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-muted: #adb5bd;
+    --border-color: #dee2e6;
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --card-bg: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #2d2d2d;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --border-color: #404040;
+    --header-bg: rgba(45, 45, 45, 0.95);
+    --card-bg: #2d2d2d;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Apply theme variables */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Force all text to use theme colors */
+* {
+    color: inherit;
+}
+
+/* Header and navigation */
+.header, .header-fullwidth, .header-transparent-bg {
+    background-color: var(--header-bg) !important;
+    backdrop-filter: blur(10px);
+    transition: background-color 0.3s ease;
+}
+
+.header-desk {
+    background-color: transparent;
+}
+
+.header-mobile {
+    background-color: var(--header-bg) !important;
+}
+
+.footer {
+    background-color: var(--bg-tertiary) !important;
+    transition: background-color 0.3s ease;
+}
+
+.category-banner {
+    background-color: var(--bg-tertiary) !important;
+    transition: background-color 0.3s ease;
+}
+
+/* Navigation links */
+.navigation__link {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.navigation__link:hover {
+    color: var(--text-secondary);
+}
+
+/* Header tools */
+.header-tools__item {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.header-tools__item:hover {
+    color: var(--text-secondary);
+}
+
+/* Cards and containers */
+.card, .container, .bg-body {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Text elements */
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Borders */
+.border, .border-top, .border-bottom {
+    border-color: var(--border-color) !important;
+}
+
+/* Form elements */
+.form-control, .form-select, input, textarea, select {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus, input:focus, textarea:focus, select:focus {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+    box-shadow: 0 0 0 0.2rem var(--shadow);
+}
+
+/* Buttons */
+.btn {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark mode toggle button styling */
+#dark-mode-toggle, #dark-mode-toggle-mobile {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+#dark-mode-toggle:hover, #dark-mode-toggle-mobile:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* Mobile navigation */
+.header-mobile__navigation {
+    background-color: var(--bg-primary);
+    transition: background-color 0.3s ease;
+}
+
+/* Search popup */
+.search-popup {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Social links */
+.footer__social-link {
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.footer__social-link:hover {
+    color: var(--text-primary);
+}
+
+/* Menu links */
+.menu-link {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.menu-link:hover {
+    color: var(--text-secondary);
+}
+
+/* Sub menu */
+.sub-menu__title {
+    color: var(--text-primary);
+}
+
+.sub-menu__list .menu-link {
+    color: var(--text-secondary);
+}
+
+.sub-menu__list .menu-link:hover {
+    color: var(--text-primary);
+}
+
+/* Footer mobile */
+.footer-mobile {
+    background-color: var(--bg-primary);
+    transition: background-color 0.3s ease;
+}
+
+.footer-mobile__link {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.footer-mobile__link:hover {
+    color: var(--text-secondary);
+}
+
+/* Customer links */
+.customer-links {
+    color: var(--text-primary);
+}
+
+/* Social links in mobile nav */
+.social-links .footer__social-link {
+    color: var(--text-secondary);
+}
+
+.social-links .footer__social-link:hover {
+    color: var(--text-primary);
+}
+
+    /* Category banner dark mode styles */
+    .category-banner-title {
+        color: var(--text-primary) !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .category-banner-link {
+        color: var(--text-primary) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+    .category-banner__item-mark {
+        color: var(--text-primary) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Comprehensive dark mode overrides */
+[data-theme="dark"] {
+    /* Force all divs to use the same dark color */
+    div, .container, .row, .col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+    .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col-auto,
+    .col-sm, .col-md, .col-lg, .col-xl, .col-xxl, .card, .bg-body, .bg-light, .bg-white {
+        background-color: var(--bg-primary) !important;
+    }
+
+    /* Force all text to be white */
+    h1, h2, h3, h4, h5, h6, p, span, div, a, li, td, th, label, small, strong, em, b, i {
+        color: var(--text-primary) !important;
+    }
+
+    /* Specific text color overrides */
+    .text-dark, .text-black {
+        color: var(--text-primary) !important;
+    }
+
+    /* Background overrides */
+    .bg-white, .bg-light {
+        background-color: var(--card-bg) !important;
+    }
+
+    .bg-body {
+        background-color: var(--bg-primary) !important;
+    }
+
+    /* Navigation specific */
+    .navigation__list {
+        background-color: transparent;
+    }
+
+    .navigation__item {
+        background-color: transparent;
+    }
+
+    /* Header tools */
+    .header-tools {
+        background-color: transparent;
+    }
+
+    /* Search field */
+    .search-field__input, .search-popup__input {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    /* All containers and cards */
+    .container, .row, .col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+    .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col-auto,
+    .col-sm, .col-md, .col-lg, .col-xl, .col-xxl {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary);
+    }
+
+    /* Shop filters and sidebars */
+    .sidebar, .filter, .filter-sidebar, .shop-filter, .category-filter {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+    }
+
+    /* Product cards */
+    .product-card, .product-item, .card {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    /* Tables */
+    table, .table {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .table th, .table td {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    /* Lists */
+    ul, ol, li {
+        color: var(--text-primary) !important;
+    }
+
+    /* Links */
+    a {
+        color: var(--text-primary) !important;
+    }
+
+    a:hover {
+        color: var(--text-secondary) !important;
+    }
+
+    /* Buttons */
+    .btn {
+        color: var(--text-primary) !important;
+    }
+
+    .btn-outline-dark {
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .btn-outline-dark:hover {
+        background-color: var(--text-primary) !important;
+        color: var(--bg-primary) !important;
+    }
+
+    /* Dropdowns */
+    .dropdown-menu {
+        background-color: var(--card-bg) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .dropdown-item {
+        color: var(--text-primary) !important;
+    }
+
+    .dropdown-item:hover {
+        background-color: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
+    }
+
+    /* Modals */
+    .modal-content {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .modal-header, .modal-body, .modal-footer {
+        background-color: transparent !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    /* Alerts */
+    .alert {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+        background-color: transparent !important;
+    }
+
+    .breadcrumb-item {
+        color: var(--text-primary) !important;
+    }
+
+    .breadcrumb-item.active {
+        color: var(--text-secondary) !important;
+    }
+
+
+    .pagination .page-link {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .pagination .page-link:hover {
+        background-color: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: var(--text-primary) !important;
+        color: var(--bg-primary) !important;
+    }
+
+
+    .badge {
+        color: var(--text-primary) !important;
+    }
+
+
+    .progress {
+        background-color: var(--bg-secondary) !important;
+    }
+
+
+    .nav-tabs .nav-link {
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .nav-tabs .nav-link.active {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) var(--border-color) var(--card-bg) !important;
+    }
+
+
+    .accordion-item {
+        background-color: var(--card-bg) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .accordion-header button {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .accordion-body {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+    }
+
+
+    .shop-main {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .shop-list {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .products-grid {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .product-card-wrapper {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .swiper-container {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .swiper-slide {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .slide-split {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .slideshow-bg {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .slideshow-text {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .shop-acs {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .shop-filter {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .col-size {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .shop-asc__seprator {
+        background-color: var(--border-color) !important;
+    }
+
+
+    .shop-sidebar {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .accordion-item {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .accordion-button {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .accordion-body {
+        background-color: var(--bg-primary) !important;
+    }
+
+    .product-card {
+        background-color: var(--bg-primary) !important;
+    }
+
+
+    .form-select {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .form-select:focus {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--text-secondary) !important;
+        box-shadow: 0 0 0 0.2rem var(--shadow) !important;
+    }
+
+    /* Price range slider */
+    .price-range-slider {
+        background-color: var(--bg-primary) !important;
+    }
+
+    /* Checkbox styling */
+    .chk-brand, .chk-category {
+        background-color: var(--bg-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .chk-brand:checked, .chk-category:checked {
+        background-color: var(--text-primary) !important;
+        border-color: var(--text-primary) !important;
+    }
+
+    /* Clean shop page styling */
+    .shop-main {
+        position: relative;
+        background: var(--bg-primary) !important;
+    }
+
+    .shop-sidebar {
+        background: var(--bg-primary) !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .shop-list {
+        background: var(--bg-primary) !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
 </style>
 </html>
