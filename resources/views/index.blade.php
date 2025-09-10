@@ -55,7 +55,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="slideshow-text container position-absolute start-50 top-50 translate-middle">
+                    <div class="slideshow-text container position-relative start-50 top-50 translate-middle bg-transparent">
                         <h6 class="text_dash text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3">
                             {{ $slide->title }}
                         </h6>
