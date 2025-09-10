@@ -180,7 +180,7 @@
                                     <td>Free</td>
                                 </tr>
                                 <tr>
-                                    <th>VAT</th>
+                                    <th>TAX</th>
                                     <td>${{Cart::instance('cart')->tax()}}</td>
                                 </tr>
                                 <tr>

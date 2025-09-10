@@ -4,8 +4,9 @@
     .brand-list li, .category-list li {
         line-height: 40px;
     }
-    body{
-
+    body {
+        margin: 0;
+        padding: 0;
     }
     .brand-list li .chk-brand, .category-list li .chk-category{
         width: 1rem;
@@ -194,6 +195,7 @@
         margin: 20px 0 !important;
         outline: none !important;
         -webkit-appearance: none !important;
+        appearance: none !important;
     }
 
     .price-range-slider::-webkit-slider-thumb {
@@ -315,6 +317,80 @@
         border-radius: 8px !important;
         margin-bottom: 15px !important;
         overflow: hidden !important;
+    }
+
+    /* Navbar and main container margins */
+    .shop-main {
+        margin-top: 20px !important;
+        margin-bottom: 30px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    /* Sidebar margins */
+    .shop-sidebar {
+        margin-right: 25px !important;
+        padding: 20px !important;
+        border-radius: 12px !important;
+    }
+
+    /* Shop list container margins */
+    .shop-list {
+        margin-left: 15px !important;
+        padding: 20px !important;
+    }
+
+    /* Slide container margins */
+    .swiper-container.slideshow {
+        margin-bottom: 30px !important;
+        border-radius: 15px !important;
+        overflow: hidden !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Slide content margins */
+    .slide-split {
+        margin: 0 !important;
+        border-radius: 15px !important;
+    }
+
+    .slide-split_text {
+        padding: 40px 30px !important;
+        margin: 0 !important;
+    }
+
+    .slide-split_media {
+        margin: 0 !important;
+        border-radius: 0 15px 15px 0 !important;
+    }
+
+    /* Slideshow text container margins */
+    .slideshow-text {
+        margin: 0 !important;
+        padding: 30px 25px !important;
+    }
+
+    /* Product grid margins */
+    .products-grid {
+        margin-top: 25px !important;
+        padding: 0 10px !important;
+    }
+
+    .product-card-wrapper {
+        margin-bottom: 25px !important;
+        padding: 0 8px !important;
+    }
+
+    /* Shop controls margins */
+    .shop-acs {
+        margin-bottom: 20px !important;
+        padding: 15px 0 !important;
+    }
+
+    /* Breadcrumb margins */
+    .breadcrumb {
+        margin-bottom: 20px !important;
+        padding: 10px 0 !important;
     }
 </style>
     <main class="pt-90">

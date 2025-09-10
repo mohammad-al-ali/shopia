@@ -40,17 +40,7 @@
                         </div>
                         <div class="pb-3"></div>
 
-                        <div class="form-floating mb-3">
-                            <input id="address" type="text" class="form-control form-control_gray  @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}"
-                                   required="" autocomplete="address">
-                            <label for="address">Address *</label>
-                            @error('address')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
-                        </div>
-
+                    
                         <div class="pb-3"></div>
                         <div class="form-floating mb-3">
                             <input id="email" type="email" class="form-control form-control_gray  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required=""

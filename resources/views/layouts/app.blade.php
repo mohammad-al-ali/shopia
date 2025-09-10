@@ -264,8 +264,6 @@
             z-index:1000;
             padding-right:80px;
            }
-          }
-
         </style>
 
         <!-- Dark Mode Toggle Button for Mobile -->
@@ -291,8 +289,6 @@
             z-index:1000;
             margin-right:50px;
           }
-
-        }
     </style>
 
     <nav
@@ -386,7 +382,7 @@
         <div class="header-desk header-desk_type_1">
             <div class="logo">
                 <a href="{{route('home.index')}}">
-                    <img src="assets/images/logo.png" alt="Uomo" class="logo__image d-block" />
+                    <img src="{{asset('assets/images/logo.png')}}" alt="Uomo" class="logo__image d-block" />
                 </a>
             </div>
 
@@ -410,7 +406,11 @@
                 </ul>
             </navv>
             <style>
-                grid-column: 2; justify-self: center; text-align: center;
+                .navigation {
+                    grid-column: 2; 
+                    justify-self: center; 
+                    text-align: center;
+                }
             </style>
 
             <div class="header-tools d-flex align-items-center">
@@ -470,7 +470,7 @@
         <div class="row text-center text-md-start">
             <!-- الشعار -->
             <div class="col-md-4 mb-4 mb-md-0 d-flex flex-column align-items-center align-items-md-start">
-                <img src="assets/images/logo.png" alt="ElectroStore" style="height: 50px;" class="mb-3">
+                <img src="{{asset('assets/images/logo.png')}}" alt="ElectroStore" style="height: 50px;" class="mb-3">
                 <p class="mb-1">📍 Syria,Aleppo,furqan</p>
                 <p class="mb-1">📧 shopia@gmail.com</p>
                 <p class="mb-0">📞 +963 935 200 536</p>
@@ -637,6 +637,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <style>
 .footer{
     background-color:#f0e9e9ff;
+}
+
+/* Light mode footer styling */
+[data-theme="light"] .footer {
+    background-color: #ffffff !important;
 }
 .category-banner{
     background-color:#f0e9e9ff;
@@ -1107,19 +1112,19 @@ body {
     }
 
     .swiper-slide {
-        /*background-color: var(--bg-primary) !important;*/
+        background-color: transparent;
     }
 
     .slide-split {
-        /*background-color: var(--bg-primary) !important;*/
+        background-color: transparent;
     }
 
     .slideshow-bg {
-        /*background-color: var(--bg-primary) !important;*/
+        background-color: transparent;
     }
 
     .slideshow-text {
-        /*background-color: var(--bg-primary) !important;*/
+        background-color: transparent;
     }
 
     .shop-acs {
@@ -1175,8 +1180,252 @@ body {
 
     /* Price range slider */
     .price-range-slider {
-        /*background-color: var(--bg-primary) !important;*/
+        background-color: transparent;
     }
 
+    /* Button styling for dark mode */
+    .btn-primary {
+        background-color: var(--text-primary) !important;
+        border-color: var(--text-primary) !important;
+        color: var(--bg-primary) !important;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--text-secondary) !important;
+        border-color: var(--text-secondary) !important;
+        color: var(--bg-primary) !important;
+    }
+
+    .btn-warning {
+        background-color: #ffc107 !important;
+        border-color: #ffc107 !important;
+        color: #000 !important;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800 !important;
+        border-color: #d39e00 !important;
+        color: #000 !important;
+    }
+
+    /* Add to cart button styling */
+    .pc__atc {
+        background-color: var(--text-primary) !important;
+        color: var(--bg-primary) !important;
+        border-color: var(--text-primary) !important;
+    }
+
+    .pc__atc:hover {
+        background-color: var(--text-secondary) !important;
+        color: var(--bg-primary) !important;
+        border-color: var(--text-secondary) !important;
+    }
+
+    /* Go to cart button styling */
+    .btn-warning.pc__atc {
+        background-color: #ffc107 !important;
+        color: #000 !important;
+        border-color: #ffc107 !important;
+    }
+
+    .btn-warning.pc__atc:hover {
+        background-color: #e0a800 !important;
+        color: #000 !important;
+        border-color: #d39e00 !important;
+    }
+
+    /* Quantity control styling for dark mode */
+    .qty-control__number {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .qty-control__number:focus {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--text-secondary) !important;
+        box-shadow: 0 0 0 0.2rem var(--shadow) !important;
+    }
+
+    .qty-control__reduce,
+    .qty-control__increase {
+        color: var(--text-primary) !important;
+    }
+
+    .qty-control__reduce:hover,
+    .qty-control__increase:hover {
+        color: var(--text-secondary) !important;
+    }
+
+    /* Product single page quantity control */
+    .product-single__addtocart .qty-control__number {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .product-single__addtocart .qty-control__number:focus {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--text-secondary) !important;
+    }
+
+    .product-single__addtocart .qty-control__reduce,
+    .product-single__addtocart .qty-control__increase {
+        color: var(--text-primary) !important;
+    }
+
+    /* Cart page quantity control */
+    .shopping-cart .cart-table .qty-control__number {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .shopping-cart .cart-table .qty-control__number:focus {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--text-secondary) !important;
+    }
+
+    .shopping-cart .cart-table .qty-control__reduce,
+    .shopping-cart .cart-table .qty-control__increase {
+        color: var(--text-primary) !important;
+    }
+
+    /* Cart page dark mode styling */
+    .cart-table-footer {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .cart-table-footer .form-control {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .cart-table-footer .form-control:focus {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--text-secondary) !important;
+        box-shadow: 0 0 0 0.2rem var(--shadow) !important;
+    }
+
+    .cart-table-footer .form-control::placeholder {
+        color: var(--text-muted) !important;
+    }
+
+    .cart-table-footer .btn-link {
+        background-color: var(--text-primary) !important;
+        color: var(--bg-primary) !important;
+        border: 1px solid var(--text-primary) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .cart-table-footer .btn-link:hover {
+        background-color: var(--text-secondary) !important;
+        color: var(--bg-primary) !important;
+        border-color: var(--text-secondary) !important;
+    }
+
+    .cart-table-footer .btn-light {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .cart-table-footer .btn-light:hover {
+        background-color: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--text-secondary) !important;
+    }
+
+    /* Cart totals styling */
+    .shopping-cart__totals {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .shopping-cart__totals h3 {
+        color: var(--text-primary) !important;
+    }
+
+    .cart-totals th,
+    .cart-totals td {
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .cart-totals tr {
+        border-color: var(--border-color) !important;
+    }
+
+    /* Checkout button styling */
+    .btn-checkout {
+        background-color: var(--text-primary) !important;
+        color: var(--bg-primary) !important;
+        border-color: var(--text-primary) !important;
+    }
+
+    .btn-checkout:hover {
+        background-color: var(--text-secondary) !important;
+        color: var(--bg-primary) !important;
+        border-color: var(--text-secondary) !important;
+    }
+
+    /* Slideshow text dark mode styling */
+    .slideshow-text {
+        background-color: transparent !important;
+    }
+
+    .slideshow-text h1,
+    .slideshow-text h2,
+    .slideshow-text h3,
+    .slideshow-text h4,
+    .slideshow-text h5,
+    .slideshow-text h6 {
+        color: var(--text-primary) !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .slideshow-text p {
+        color: var(--text-primary) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .slideshow-text .btn-link {
+        color: var(--text-primary) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+        border-color: var(--text-primary) !important;
+    }
+
+    .slideshow-text .btn-link:hover {
+        color: var(--text-secondary) !important;
+        border-color: var(--text-secondary) !important;
+    }
+
+    /* Text dash styling for dark mode */
+    .text_dash {
+        color: var(--text-primary) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    /* Default underline styling for dark mode */
+    .default-underline {
+        color: var(--text-primary) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .default-underline:hover {
+        color: var(--text-secondary) !important;
+    }
+
+    /* Slideshow container dark mode */
+    .slideshow-text.container {
+        background-color: transparent !important;
+    }
+}
 </style>
 </html>

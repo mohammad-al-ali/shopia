@@ -239,18 +239,7 @@
                                 @endif
                             </div>
                             <div class="checkout__payment-methods">
-                                <div class="form-check">
-                                    <input class="form-check-input form-check-input_fill" type="radio" name="mode"
-                                           id="mode1" value="credit_card">
-                                    <label class="form-check-label" for="mode1">
-                                        Debit or Credit Cart
-                                        <p class="option-detail">
-                                            Phasellus sed volutpat orci. Fusce eget lore mauris vehicula elementum gravida nec dui. Aenean
-                                            aliquam varius ipsum, non ultricies tellus sodales eu. Donec dignissim viverra nunc, ut aliquet
-                                            magna posuere eget.
-                                        </p>
-                                    </label>
-                                </div>
+                              
                                 <div class="form-check">
                                     <input class="form-check-input form-check-input_fill" type="radio" name="mode"
                                            id="mode2" value="paypal">
@@ -263,11 +252,7 @@
                                            id="mode3" value="cash">
                                     <label class="form-check-label" for="mode3">
                                         Cash on Delivery
-                                        <p class="option-detail">
-                                            Phasellus sed volutpat orci. Fusce eget lore mauris vehicula elementum gravida nec dui. Aenean
-                                            aliquam varius ipsum, non ultricies tellus sodales eu. Donec dignissim viverra nunc, ut aliquet
-                                            magna posuere eget.
-                                        </p>
+                                   
                                     </label>
                                 </div>
                                 <div class="policy-text">

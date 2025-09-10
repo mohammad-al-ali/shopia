@@ -56,17 +56,17 @@
                         </div>
                     </div>
                     <div class="slideshow-text container position-relative start-50 top-50 translate-middle bg-transparent">
-                        <h6 class="text_dash text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3">
-                            {{ $slide->title }}
-                        </h6>
-                        <h2 class="h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5">
-                            {{ $slide->subtitle }}
-                        </h2>
-                        <a href="{{ $slide->link }}"
-                           class="btn-link btn-link_lg default-underline fw-medium animate animate_fade animate_btt animate_delay-7">
-                            Shop Now
-                        </a>
-                    </div>
+    <h6 class="text_dash text-uppercase fs-base fw-medium animate animate_fade animate_btt animate_delay-3">
+        {{ $slide->title }}
+    </h6>
+    <h2 class="h1 fw-normal mb-0 animate animate_fade animate_btt animate_delay-5">
+        {{ $slide->subtitle }}
+    </h2>
+    <a href="{{ $slide->link }}"
+       class="btn-link btn-link_lg default-underline fw-medium animate animate_fade animate_btt animate_delay-7">
+        Shop Now
+    </a>
+</div>
                 </div>
             </div>
             @endif
@@ -562,9 +562,7 @@
                     @endforeach
                 </div>
 
-                <div class="text-center mt-2">
-                    <a class="btn-link btn-link_lg default-underline text-uppercase fw-medium" href="#">Load More</a>
-                </div>
+            
             </section>
         </div>
 

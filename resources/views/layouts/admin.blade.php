@@ -39,8 +39,8 @@
             <div class="section-menu-left">
                 <div class="box-logo">
                     <a href="{{route('admin.index')}}" id="site-logo-inner">
-                        <img class="" id="logo_header_1" alt="" src="assets/images/logo.png"
-                             data-light="{{asset('images/logo/logo.png')}}" data-dark="{{asset('images/logo/logo.png')}}">
+                        <img class="" id="logo_header_1" alt="" src="{{asset('assets/images/logo.png')}}"
+                             data-light="{{asset('assets/images/logo.png')}}" data-dark="{{asset('assets/images/logo.png')}}" style="max-width: 120px; height: 75px;">
                     </a>
                     <div class="button-show-hide">
                         <i class="icon-menu-left"></i>
@@ -116,23 +116,12 @@
                                 </ul>
                             </li>
 
-                            <li class="menu-item has-children">
-                                <a href="javascript:void(0);" class="menu-item-button">
+                           
+                            <li class="menu-item">
+                                <a href="{{route('admin.order.orders')}}" class="">
                                     <div class="icon"><i class="icon-file-plus"></i></div>
-                                    <div class="text">Order</div>
+                                    <div class="text">Orders</div>
                                 </a>
-                                <ul class="sub-menu">
-                                    <li class="sub-menu-item">
-                                        <a href="{{route('admin.order.orders')}}" class="">
-                                            <div class="text">Orders</div>
-                                        </a>
-                                    </li>
-                                    <li class="sub-menu-item">
-                                        <a href="order-tracking.html" class="">
-                                            <div class="text">Order tracking</div>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="menu-item">
                                 <a href="{{route('admin.slide.slides')}}" class="">
@@ -154,12 +143,7 @@
 {{--                                </a>--}}
 {{--                            </li>--}}
 
-                            <li class="menu-item">
-                                <a href="settings.html" class="">
-                                    <div class="icon"><i class="icon-settings"></i></div>
-                                    <div class="text">Settings</div>
-                                </a>
-                            </li>
+                    
                             <li class="menu-item">
                                 <form method="POST" action="{{route('logout')}}" id="logout-form">
                                     @csrf
@@ -179,10 +163,10 @@
                 <div class="header-dashboard">
                     <div class="wrap">
                         <div class="header-left">
-                            <a href="index-2.html">
-                                <img class="" id="logo_header_mobile" alt="" src="{{asset('images/logo/logo.png')}}"
-                                     data-light="{{asset('images/logo/logo.png')}}" data-dark="{{asset('images/logo/logo.png')}}"
-                                     data-width="154px" data-height="52px" data-retina="{{asset('images/logo/logo.png')}}">
+                            <a href="{{route('admin.index')}}">
+                                <img class="" id="logo_header_mobile" alt="" src="{{asset('assets/images/logo.png')}}"
+                                     data-light="{{asset('assets/images/logo.png')}}" data-dark="{{asset('assets/images/logo.png')}}"
+                                     data-width="120px" data-height="40px" data-retina="{{asset('assets/images/logo.png')}}" style="max-width: 120px; height: auto;">
                             </a>
                             <div class="button-show-hide">
                                 <i class="icon-menu-left"></i>
