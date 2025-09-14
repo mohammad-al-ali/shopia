@@ -228,12 +228,16 @@
                                         <td class="text-center">${{$order->tax}}</td>
                                         <td class="text-center">${{$order->total_amount}}</td>
                                         <td class="text-center">
-                                            @if($order->status ==='delivered')
+                                            @if($order->status === 'delivered')
                                                 <span class="badge bg-success">Delivered</span>
-                                            @elseif($order->status ==='canceled')
+                                            @elseif($order->status === 'canceled')
                                                 <span class="badge bg-danger">Canceled</span>
+                                            @elseif($order->status === 'shipped')
+                                                <span class="badge bg-danger">Shipped</span>
+                                            @elseif($order->status === 'processing')
+                                                <span class="badge bg-danger">Processing</span>
                                             @else
-                                                <span class="badge bg-warning">Processing</span>
+                                                <span class="badge bg-warning">shipped</span>
                                             @endif
                                         </td>
                                         <td class="text-center">{{$order->payment_status}}</td>

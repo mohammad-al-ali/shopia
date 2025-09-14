@@ -10,7 +10,7 @@ class OrderRepository
 {
     public function getAllPaginated($limit = 12)
     {
-        return Order::orderBy('created_at', 'DESC')->paginate($limit);
+        return Order::orderBy('id', 'DESC')->paginate($limit);
     }
 
     public function find($id)

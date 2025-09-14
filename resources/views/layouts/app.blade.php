@@ -1426,6 +1426,152 @@ body {
     .slideshow-text.container {
         background-color: transparent !important;
     }
+
+    /* Authentication pages dark mode styling - Higher specificity */
+    .login-register {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .login-register p {
+        color: var(--text-secondary) !important;
+    }
+
+    /* Navigation tabs styling with higher specificity */
+    .login-register .nav-tabs {
+        border-color: var(--border-color) !important;
+    }
+
+    .login-register .nav-link {
+        color: var(--text-primary) !important;
+        background-color: transparent !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .login-register .nav-link:hover {
+        color: var(--text-secondary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .login-register .nav-link.active {
+        color: var(--text-primary) !important;
+        background-color: var(--card-bg) !important;
+        border-color: var(--border-color) var(--border-color) var(--card-bg) !important;
+    }
+
+    /* Specific nav-link_underscore styling */
+    .login-register .nav-link_underscore {
+        color: var(--text-primary) !important;
+    }
+
+    .login-register .nav-link_underscore:hover,
+    .login-register .nav-link_underscore:focus,
+    .login-register .nav-link_underscore.active,
+    .login-register .nav-item.show .nav-link_underscore {
+        color: var(--text-primary) !important;
+    }
+
+    .login-register .nav-link_underscore:after {
+        background-color: var(--text-primary) !important;
+    }
+
+    /* Form styling */
+    .login-form,
+    .register-form {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        padding: 20px !important;
+        border-radius: 8px !important;
+        border: 1px solid var(--border-color) !important;
+    }
+
+    /* Form controls with gray styling - Higher specificity */
+    .login-register .form-control_gray,
+    .register-form .form-control_gray,
+    .login-form .form-control_gray {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .login-register .form-control_gray:focus,
+    .register-form .form-control_gray:focus,
+    .login-form .form-control_gray:focus {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--text-secondary) !important;
+        box-shadow: 0 0 0 0.2rem var(--shadow) !important;
+    }
+
+    .login-register .form-control_gray::placeholder,
+    .register-form .form-control_gray::placeholder,
+    .login-form .form-control_gray::placeholder {
+        color: var(--text-muted) !important;
+    }
+
+    /* Form labels with higher specificity */
+    .login-register .form-floating > label,
+    .register-form .form-floating > label,
+    .login-form .form-floating > label {
+        color: var(--text-muted) !important;
+    }
+
+    .login-register .form-floating > .form-control:focus ~ label,
+    .login-register .form-floating > .form-control:not(:placeholder-shown) ~ label,
+    .register-form .form-floating > .form-control:focus ~ label,
+    .register-form .form-floating > .form-control:not(:placeholder-shown) ~ label,
+    .login-form .form-floating > .form-control:focus ~ label,
+    .login-form .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        color: var(--text-secondary) !important;
+    }
+
+    /* Invalid feedback */
+    .login-register .invalid-feedback,
+    .register-form .invalid-feedback,
+    .login-form .invalid-feedback {
+        color: #dc3545 !important;
+    }
+
+    /* Form validation */
+    .login-register .form-control.is-invalid,
+    .register-form .form-control.is-invalid,
+    .login-form .form-control.is-invalid {
+        border-color: #dc3545 !important;
+    }
+
+    .login-register .form-control.is-invalid:focus,
+    .register-form .form-control.is-invalid:focus,
+    .login-form .form-control.is-invalid:focus {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+    }
+
+    /* Customer option styling */
+    .login-register .customer-option {
+        color: var(--text-primary) !important;
+    }
+
+    .login-register .customer-option .text-secondary {
+        color: var(--text-secondary) !important;
+    }
+
+    .login-register .customer-option .btn-text {
+        color: var(--text-primary) !important;
+        text-decoration: underline !important;
+    }
+
+    .login-register .customer-option .btn-text:hover {
+        color: var(--text-secondary) !important;
+    }
+
+    /* Tab content */
+    .login-register .tab-content {
+        background-color: transparent !important;
+    }
+
+    .login-register .tab-pane {
+        background-color: transparent !important;
+    }
 }
 </style>
 </html>
