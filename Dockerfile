@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
 # تفعيل mod_rewrite في Apache
 RUN a2enmod rewrite
 
+RUN docker-php-ext-install pdo pdo_pgsql
 # تثبيت Composer
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
