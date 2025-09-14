@@ -1,40 +1,44 @@
-# استخدم صورة PHP مع Apache
+# Use official PHP image with Apache
 FROM php:8.2-apache
 
-# تثبيت بعض الامتدادات المطلوبة لـ Laravel
+# Install required system dependencies and PHP extensions for Laravel
+# - git, unzip, curl: useful for dependencies and debugging
+# - libpq-dev: required for PostgreSQL driver (pdo_pgsql)
+# - libpng-dev, libonig-dev, libxml2-dev, zip: common Laravel requirements
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
+    curl \
+    libpq-dev \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
     zip \
-    curl
+    && docker-php-ext-install pdo pdo_pgsql mbstring zip
 
-# تفعيل mod_rewrite في Apache
+# Enable Apache mod_rewrite (required for Laravel pretty URLs)
 RUN a2enmod rewrite
 
-RUN docker-php-ext-install pdo pdo_pgsql
-# تثبيت Composer
+# Install Composer (copied from the official Composer image)
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
-# تعيين مجلد العمل
+# Set working directory inside the container
 WORKDIR /var/www/html
 
-# نسخ الملفات إلى داخل الحاوية
+# Copy project files into the container
 COPY . .
 
-# تثبيت البكجات
+# Install PHP dependencies in production mode (no dev packages)
 RUN composer install --no-dev --optimize-autoloader
 
-# إعطاء الصلاحيات لمجلد التخزين و bootstrap/cache
+# Fix permissions for Laravel storage and bootstrap/cache directories
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# نسخ ملف إعدادات Apache
+# Copy custom Apache configuration for Laravel
 COPY ./docker/apache/laravel.conf /etc/apache2/sites-available/000-default.conf
 
-# فتح البورت 80
+# Expose port 80 (default HTTP)
 EXPOSE 80
 
-# تشغيل Apache
+# Run Apache in the foreground (container entrypoint)
 CMD ["apache2-foreground"]
